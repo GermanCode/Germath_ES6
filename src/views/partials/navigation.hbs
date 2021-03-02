@@ -1,14 +1,14 @@
-<div class="container-fluid ver">
+<div class="container-fluid" style="border-radius: 20%;">
   <!-- Bootstrap NavBar -->
-<nav class="navbar-expand-md navbar-dark sticky-top bg-dark">
+<nav class="navbar-expand-md navbar-dark sticky-top bg-dark" style="border-radius: 5%;">
   <a class="navbar-brand" href="/">
-    <img src="/img/Logo.jpg" width="38" height="32" class="d-inline-block align-top" alt="Logo">
+    <img src="/img/Logo.jpg" width="48" height="42" class="d-inline-block align-top" alt="Logo">
     <span>GerMath.JS</span>
   </a>
-      {{#if user}}
     <div class="navbar-collapse" style="float: right;">
  <!-- Opciones Principales --> 
     <ul class="navbar-nav ml-auto" >
+{{#if user}}
       <li class="nav-item">
         <a class="nav-link" href="/auth/profile">P22243</a>
       </li>
@@ -23,8 +23,15 @@
     Dropdown
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <button class="dropdown-item" type="button">Action</button>
-    <button class="dropdown-item" type="button">Another action</button>
+      <a href="/auth/profile" class="button">
+      <button class="dropdown-item" type="button">Perfil</button>
+      </a>
+
+     
+      <a href="/" class="button">
+      <button class="dropdown-item" type="button">Inicio</button>
+      </a>
+
     <button class="dropdown-item" type="button">Something else here</button>
   </div>
 </div>

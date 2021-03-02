@@ -5,8 +5,7 @@ module.exports = {
         user: 'root',
         password: 'root',
         database: 'germath_local'
-    }
-*/
+    }*/
     //Database Servidor Heroku
     database: {
         host: 'un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
