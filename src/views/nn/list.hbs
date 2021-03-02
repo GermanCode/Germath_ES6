@@ -1,0 +1,22 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each users}}
+        <div class="col-md-3 p-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="/nn/private" target="_blank">
+                        <h3 class="card-title text-uppercase">
+                            {{username}}
+                        </h3>
+                    </a>
+                    <p class="m-2">{{fullname}}</p>
+                    <p></p>
+                    <p>{{timeago created_at}}</p>
+                    <a href="/nn/delete/{{id}}" class="btn btn-danger">Delete</a>
+                    <a href="/nn/edit/{{id}}" class="btn btn-secondary">Edit</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

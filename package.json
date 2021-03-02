@@ -1,0 +1,42 @@
+{
+  "name": "germanth_es6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "start": "npm run build && node dist",
+    "restart": "rimraf dist && npm run start",
+    "dev": "nodemon --exec npm run restart",
+    "local": "nodemon --exec node dist/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.1",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.5",
+    "babel-plugin-transform-util-promisify": "^0.2.2",
+    "babel-promisify": "^1.0.0",
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^8.2.0",
+    "es6-promisify": "^6.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "express-mysql-session": "^2.1.5",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.10.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "timeago.js": "^4.0.2"
+  }
+}

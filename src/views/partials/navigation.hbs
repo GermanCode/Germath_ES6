@@ -1,0 +1,47 @@
+<div class="container-fluid ver">
+  <!-- Bootstrap NavBar -->
+<nav class="navbar-expand-md navbar-dark sticky-top bg-dark">
+  <a class="navbar-brand" href="/">
+    <img src="/img/Logo.jpg" width="38" height="32" class="d-inline-block align-top" alt="Logo">
+    <span>GerMath.JS</span>
+  </a>
+      {{#if user}}
+    <div class="navbar-collapse" style="float: right;">
+ <!-- Opciones Principales --> 
+    <ul class="navbar-nav ml-auto" >
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/profile">P2243</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/profile">Perfil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/logout">Salir</a>
+      </li>
+      <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" type="button">Action</button>
+    <button class="dropdown-item" type="button">Another action</button>
+    <button class="dropdown-item" type="button">Something else here</button>
+  </div>
+</div>
+      {{else}}
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/signin">Iniciar Sesión</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/signup">Registrarse</a>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+</nav>
+<!-- NavBar END -->
+  </div>
+  
