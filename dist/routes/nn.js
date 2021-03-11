@@ -1,32 +1,61 @@
 "use strict";
 
+var _network = _interopRequireDefault(require("../server/neural_network/network"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const express = require('express');
 
-const router = express.Router(); //creo que aqui llamamos los archivos de neuralnetwork, y comienza despues del post a ejecutarse
+const router = express.Router();
+
+const core = require('../public/js/nerdamer.core');
+
+; //creo que aqui llamamos los archivos de neuralnetwork, y comienza despues del post a ejecutarse
 
 const pool = require('../database');
 
 router.get('/add', (req, res) => {
   res.render('nn/add');
 });
-router.get('/nn', (req, res) => {
+router.get('/show', (req, res) => {
   res.render('nn/nn');
 });
 router.post('/add', async (req, res) => {
   const {
     f,
-    t,
+    x,
+    y,
     description
   } = req.body;
-  const newUser = {
-    id: f,
-    username: t,
-    password: description,
-    fullname: description
-  };
-  await pool.query('INSERT INTO users set ?', [newUser]);
-  req.flash('success', 'Usuario agregado con exito');
-  res.redirect('/nn');
+  const layers = [2, 3, 1];
+  const network = new _network.default(layers);
+  const numberOfIterations = 3;
+
+  try {
+    core.setFunction('f', ['x', 'y'], f);
+    var resultadox = core('f(' + x + ',' + y + ')').toString();
+    var trainingData = [{
+      input: [x, y],
+      output: [resultadox]
+    }];
+    console.log('es esto?', trainingData);
+    console.log('es resuktado?', resultadox);
+
+    for (let i = 0; i < numberOfIterations; i++) {
+      console.table('Iteracion ' + i);
+      network.train(trainingData[0].input, trainingData[0].output);
+      console.log('soy los mejores valores: ', network.mejoresValores, 'soy el mejor resultado: ', network.mejorResultado);
+      trainingData[0].input = network.mejoresValores;
+      trainingData[0].output = network.mejorResultado;
+    }
+
+    res.render('nn/nn', {
+      resultado: network.mejorResultado
+    });
+  } catch (error) {
+    console.log('error', error);
+    res.redirect('/');
+  }
 });
 router.get('/', async (req, res) => {
   const users = await pool.query('SELECT * FROM users');

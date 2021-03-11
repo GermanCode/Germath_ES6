@@ -1,14 +1,11 @@
 const core = require('nerdamer/nerdamer.core');
-const sigmoid = require('./sigmoid.js');
-const evalu = require('./evalu.js');
 const Connection = require('./connection.js');
 const Layer = require('./layer.js');
 //Input Function
-const f = '3y+(5x*y)-(4y^2)+10-y+(3x^2)*y';
+const f = '3y+(5x*y)-(4y^2)+10-y+(3x^2)*2y';
 const l = [];
-const v = [];
-const m = 0;
-const h = [];
+const mejorResultado = 0;
+const mejoresValores = [];
 
 
 class Network {
@@ -35,10 +32,8 @@ class Network {
     this.momentum =  0.1       // multiply's against the specified "change" then adds to learning rate for change
     this.iterations = 0
     this.connectLayers()
-    this.containX = [];
-    this.v = v;
-    //this.m = m;
-    this.h = h;
+    this.mejoresValores = mejoresValores;
+    this.mejorResultado = mejorResultado;
     // Declare Variables de la Funcion, que a la larga seran los nodos iniciales de la red.
   }
 
@@ -72,10 +67,8 @@ class Network {
     }
   }
 
-  // When training we will run this set of functions each time
-  //train(input="f(1,1)", output="solve")
   train(input, output) {
-    this.activate(input, this.h)
+    this.activate(input, this.mejoresValores)
 
     // Forward propagate
     this.runInputSigmoid()
@@ -88,14 +81,14 @@ class Network {
   }
 
   activate(values, h) {
-    var is_same = values.length == h.length && values.every(function(element, index) {
+    var es_Igual = values.length == h.length && values.every(function(element, index) {
       return element === h[index]; 
     });
 
-    if (is_same == true){
+    if (es_Igual == true){
     this.layers[0].neurons.forEach((n, i) => {
       n.cleanOutput();
-      n.setOutput(this.m);
+      n.setOutput(this.mejorResultado);
       }); 
     }else{
       this.layers[0].neurons.forEach((n, i) => {
@@ -105,9 +98,7 @@ class Network {
   
 
   run() {
-    // For now we only use sigmoid function
     return this.runInputSigmoid()
-
   }
 
   CalcularMejor() {
@@ -121,34 +112,33 @@ class Network {
         temp.push(this.layers[layer].neurons[neuron]);
       }
     }
-  this.m = arr.reduce((acc, max) => acc > max ? acc : max);
+
+    this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
   
-  let res = temp.find(B => B.resultadoGlobal === this.m);
-  obbj.input = res.output;
-  obbj.output = res.resultadoGlobal;
+    let res = temp.find(B => B.resultadoGlobal === this.mejorResultado);
+    obbj.input = res.output;
+    obbj.output = res.resultadoGlobal;
 
-  this.h = obbj.input;
-
-
+    this.mejoresValores = obbj.input;
 }
 
   runInputSigmoid() {
     let f2 = 3;
     for (var layer = 1; layer < this.layers.length; layer++) {
       for (var neuron = 0; neuron < this.layers[layer].neurons.length; neuron++) {
-           const bias = this.layers[layer].neurons[neuron].bias
-           //cambonada apra ver si funciona
-           var cont=0;
-        // For each neuron in this layer we compute its output value
+        const bias = this.layers[layer].neurons[neuron].bias
+
+        var cont=0;
         const connectionsValue = this.layers[layer].neurons[neuron].inputConnections;
 
-        //aqui va un ciclo para mostrar todos los valore separados en console
         connectionsValue.map((s, i) => {
-        const variables = [];               
+        const variables = [];
+
           if (layer === this.layers.length - 1){
             let p = 0;
+
             // 'o' es una variable simbolica para determinar el numero de variables de la funcion
-            // basados en el numero de neuronas de entrada en la primer capa
+            // basados en el numero de neuronas de entrada en la primer capa.
             for(let o = 0; o < this.layers[0].neurons.length; o++){ 
               let individualWeight = s.weight * s.from.output[o];
               variables.push(individualWeight)    
@@ -157,7 +147,7 @@ class Network {
             this.layers[layer].neurons[neuron].setOutput(variables);
             console.table(this.layers[layer].neurons[neuron].output);
             
-            this.layers[layer].neurons[neuron].getResultado(f, l, i);  
+            this.layers[layer].neurons[neuron].getResultado(f, l, i);  //Retorna el resultado Global y lo almacena en "p"
             p = this.layers[layer].neurons[neuron].resultadoGlobal;
             console.log('nodo '+ i +' Neurona 6 - Salida', p);
 
@@ -172,19 +162,19 @@ class Network {
             cont ++;
             
             if(cont === this.layers[0].neurons.length){
-              //pequeña trampilla con 'a'
               let a = 'a'
               let p = 0;
+
               this.layers[layer].neurons[neuron].getResultado(f, l, a);                                       
               console.table(this.layers[layer].neurons[neuron].valoresParciales);
+
               this.layers[layer].neurons[neuron].cleanValoresParciales(0);
               p = this.layers[layer].neurons[neuron].resultadoGlobal;
-              console.log('Neurona '+f2, p);
+              //Para visualizacion del resultado.
+              console.log('Neurona: '+f2, p);
               f2++;
             }
-            //
             return this.layers[layer].neurons[neuron].resultadoGlobal;
-
           }
         });       
       }

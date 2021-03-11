@@ -1,54 +1,53 @@
 <div class="container-fluid" style="border-radius: 20%;">
   <!-- Bootstrap NavBar -->
-<nav class="navbar-expand-md navbar-dark sticky-top bg-dark" style="border-radius: 5%;">
-  <a class="navbar-brand" href="/">
-    <img src="/img/Logo.jpg" width="48" height="42" class="d-inline-block align-top" alt="Logo">
-    <span>GerMath.JS</span>
-  </a>
+  <nav class="navbar-expand-md navbar-dark sticky-top bg-dark" style="border-radius: 5%;">
+    <a class="navbar-brand" href="/">
+      <img src="/img/Logo.jpg" width="48" height="42" class="d-inline-block align-top" alt="Logo">
+      <span>GerMath.JS</span>
+    </a>
     <div class="navbar-collapse" style="float: right;">
- <!-- Opciones Principales --> 
-    <ul class="navbar-nav ml-auto" >
-{{#if user}}
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/profile">P22243</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/profile">Perfil</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/logout">Salir</a>
-      </li>
-      <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-      <a href="/auth/profile" class="button">
-      <button class="dropdown-item" type="button">Perfil</button>
-      </a>
-
-     
-      <a href="/" class="button">
-      <button class="dropdown-item" type="button">Inicio</button>
-      </a>
-
-    <button class="dropdown-item" type="button">Something else here</button>
-  </div>
+      <!-- Opciones Principales -->
+      <ul class="navbar-nav ml-auto">
+        {{#if user}}
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/profile">P22243</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/profile">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Salir</a>
+        </li>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <a href="/auth/profile" class="button">
+              <button class="dropdown-item" type="button">Perfil</button>
+            </a>
+            <a href="/" class="button">
+              <button class="dropdown-item" type="button">Inicio</button>
+            </a>
+            <a href="/nn/add">
+              <button class="dropdown-item" type="button">Pruebas Beta Red</button>
+            </a>
+          </div>
+        </div>
+        {{else}}
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/signin">Iniciar Sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/signup">Registrarse</a>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+  <!-- NavBar END -->
 </div>
-      {{else}}
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/signin">Iniciar Sesión</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/signup">Registrarse</a>
-      </li>
-      {{/if}}
-    </ul>
-  </div>
-</nav>
-<!-- NavBar END -->
-  </div>
-  

@@ -1,4 +1,5 @@
 {
+  "compact": false,
   "presets": [
     [
       "@babel/preset-env",
@@ -11,4 +12,5 @@
   ],
   "plugins": ["@babel/plugin-proposal-class-properties",
               "transform-util-promisify"]
+  
 }

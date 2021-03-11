@@ -1,6 +1,5 @@
 const uid = require ('./uid.js');
 const core = require('nerdamer/nerdamer.core');
-const evalu = require('./evalu.js');
 
 class Neuron {
   constructor() {
