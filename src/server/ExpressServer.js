@@ -4,7 +4,7 @@ import exphbs       from 'express-handlebars';
 import path         from 'path';
 import flash        from 'connect-flash';
 import session      from 'express-session';
-const MySQLStore = require('express-mysql-session');
+import MySQLStore   from 'express-mysql-session';
 import passport     from 'passport';
 import bodyParser   from 'body-parser';
 

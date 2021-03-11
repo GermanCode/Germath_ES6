@@ -12,6 +12,8 @@ var _connectFlash = _interopRequireDefault(require("connect-flash"));
 
 var _expressSession = _interopRequireDefault(require("express-session"));
 
+var _expressMysqlSession = _interopRequireDefault(require("express-mysql-session"));
+
 var _passport = _interopRequireDefault(require("passport"));
 
 var _bodyParser = _interopRequireDefault(require("body-parser"));
@@ -21,8 +23,6 @@ var _keys = require("../keys.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-const MySQLStore = require('express-mysql-session');
 
 const {
   routesIndex,
@@ -76,7 +76,7 @@ class ExpressServer {
         secret: 'NeuralNetworksGermanCode',
         resave: false,
         saveUninitialized: false,
-        store: new MySQLStore(_keys.database)
+        store: new _expressMysqlSession.default(_keys.database)
       }));
       this.server.use(_passport.default.initialize());
       this.server.use(_passport.default.session()); //Global Variables

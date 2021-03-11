@@ -111,3 +111,27 @@
   text-align: right;
   padding-left: 10px;
 }
+
+.recuadro {
+	border:1px solid black;
+	width:49.5%;
+	display:inline-block;
+	height:49.5%;
+	overflow:hidden;
+}
+
+.recuadro2 {
+	border:1px solid black;
+	width:100%;
+	display:inline-block;
+	height:49.5%;
+	overflow:hidden;
+}
+
+.allpage {
+    height: 580px;
+	margin:0;
+	padding:0;
+	width:100%;
+	background-color:silver;
+}

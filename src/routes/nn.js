@@ -8,6 +8,12 @@ router.get('/add', (req, res) => {
     res.render('nn/add');
 });
 
+router.get('/nn', (req, res) => {
+    res.render('nn/nn');
+});
+
+
+
 router.post('/add', async (req, res) => {
     const { f, t, description } = req.body;
     const newUser = {
