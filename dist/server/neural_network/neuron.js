@@ -23,7 +23,7 @@ class Neuron {
     this.resultadoGlobal = [];
     this.letra = '';
     this.dirChangeX = 0;
-    this.dirChangeY = 0; //console.log(this.id);
+    this.dirChangeY = 0;
   }
 
   toJSON() {

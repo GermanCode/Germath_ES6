@@ -20,8 +20,6 @@ class Neuron {
     this.letra = '';
     this.dirChangeX = 0;
     this.dirChangeY = 0;
-    //console.log(this.id);
-
   }
 
   toJSON() {
