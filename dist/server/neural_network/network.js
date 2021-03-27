@@ -189,7 +189,6 @@ class Network {
             console.log('nodo ' + i + ' Neurona 6 - Salida', p);
             this.layers[layer].neurons[neuron].cleanValoresParciales(1);
             this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
-            console.log(' 2 Valores Parciales O', this.layers[layer].neurons[neuron].valoresParcialesO);
             return this.layers[layer].neurons[neuron].resultadoGlobal[0];
           } else {
             let individualWeight = s.weight * s.from.output;
@@ -199,9 +198,7 @@ class Network {
             if (cont === this.layers[0].neurons.length) {
               let a = 'a';
               let p = 0;
-              this.layers[layer].neurons[neuron].getResultado(this.f, l, a); //console.log('Valores Parciales: ');                                       
-              //console.table(this.layers[layer].neurons[neuron].valoresParciales);
-
+              this.layers[layer].neurons[neuron].getResultado(this.f, l, a);
               this.layers[layer].neurons[neuron].cleanValoresParciales(0);
               this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
               p = this.layers[layer].neurons[neuron].resultadoGlobal[0]; //Para visualizacion del resultado.

@@ -185,9 +185,8 @@ class Network {
             this.layers[layer].neurons[neuron].cleanValoresParciales(1);
             this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
 
-            console.log(' 2 Valores Parciales O', this.layers[layer].neurons[neuron].valoresParcialesO);
             return this.layers[layer].neurons[neuron].resultadoGlobal[0];
-
+            
           } else {
 
             let individualWeight = s.weight * s.from.output;
@@ -199,9 +198,6 @@ class Network {
               let p = 0;
 
               this.layers[layer].neurons[neuron].getResultado(this.f, l, a);
-              //console.log('Valores Parciales: ');                                       
-              //console.table(this.layers[layer].neurons[neuron].valoresParciales);
-
               this.layers[layer].neurons[neuron].cleanValoresParciales(0);
               this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
               p = this.layers[layer].neurons[neuron].resultadoGlobal[0];

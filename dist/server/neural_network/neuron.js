@@ -70,7 +70,6 @@ class Neuron {
       this.valoresParciales = [];
     } else {
       this.output = [];
-      console.log('valoes parciales dentro de clean valores parciales', this.valoresParciales);
       this.output = this.valoresParciales;
       this.valoresParcialesO.push(this.valoresParciales[0]);
       this.valoresParciales = [];
@@ -86,10 +85,8 @@ class Neuron {
   }
 
   setOutput(val) {
-    console.log('val en setoutput', val);
     this.output.push(val);
     this.valoresParciales.push(val);
-    console.log('valores parciales setOutput', this.valoresParciales);
   }
 
   setDelta(val) {
