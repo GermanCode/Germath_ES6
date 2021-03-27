@@ -17,8 +17,7 @@ passport.use('local.signin', new LocalStrategy({
 
   if (rows.length > 0) {
     const persona = rows[0];
-    const validPassword = await helpers.mathPassword(password, persona.password);
-    console.log(validPassword);
+    const validPassword = await helpers.mathPassword(password, persona.password); //console.log(validPassword);
 
     if (validPassword) {
       done(null, persona, req.flash('success', 'Welcome' + persona.Identificacion));

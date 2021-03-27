@@ -8,19 +8,25 @@ const express = require('express');
 
 const router = express.Router();
 
-const core = require('../public/js/nerdamer.core');
+const core = require('../public/js/nerdamer.core'); //creo que aqui llamamos los archivos de neuralnetwork, y comienza despues del post a ejecutarse
 
-; //creo que aqui llamamos los archivos de neuralnetwork, y comienza despues del post a ejecutarse
 
 const pool = require('../database');
 
 router.get('/add', (req, res) => {
-  res.render('nn/add');
+  res.render('neural_network/add');
 });
 router.get('/show', (req, res) => {
-  res.render('nn/nn');
+  res.render('neural_network/nn');
 });
 router.post('/add', async (req, res) => {
+  var cont = 0;
+  var err = 0.01;
+  var datos = [];
+  var px, py, px1t, py1t; // Estas variables seran usadas solo para la visualizacion del resultado en tablas
+  // ordenadas debido a las trasformaciones que sufre la variable a su paso
+  //Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
+
   const {
     f,
     x,
@@ -32,14 +38,19 @@ router.post('/add', async (req, res) => {
   const numberOfIterations = 3;
 
   try {
-    core.setFunction('f', ['x', 'y'], f);
+    core.setFunction('f', network.l, f);
     var resultadox = core('f(' + x + ',' + y + ')').toString();
+    network.setF(f);
+    /*let a = []
+    a.push(x,y);
+      var resultadox2 = core('f('+a+')').toString();
+      console.log('pequeña prueba ', resultadox2)
+    */
+
     var trainingData = [{
       input: [x, y],
       output: [resultadox]
-    }];
-    console.log('es esto?', trainingData);
-    console.log('es resuktado?', resultadox);
+    }]; //while(Math.abs(fx1) > err || Math.abs(fy1) > err ){
 
     for (let i = 0; i < numberOfIterations; i++) {
       console.table('Iteracion ' + i);
@@ -49,7 +60,7 @@ router.post('/add', async (req, res) => {
       trainingData[0].output = network.mejorResultado;
     }
 
-    res.render('nn/nn', {
+    res.render('neural_network/nn', {
       resultado: network.mejorResultado
     });
   } catch (error) {
@@ -59,7 +70,7 @@ router.post('/add', async (req, res) => {
 });
 router.get('/', async (req, res) => {
   const users = await pool.query('SELECT * FROM users');
-  res.render('nn/list', {
+  res.render('neural_network/list', {
     users
   });
 });
@@ -76,7 +87,7 @@ router.get('/edit/:id', async (req, res) => {
     id
   } = req.params;
   const users = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
-  res.render('nn/edit', {
+  res.render('neural_network/edit', {
     users: users[0]
   });
 });
@@ -96,6 +107,6 @@ router.post('/edit/:id', async (req, res) => {
   };
   await pool.query('UPDATE users SET ? WHERE id = ?', [newUser, id]);
   req.flash('success', 'Usuario Actualizado Correctamente.');
-  res.redirect('/nn/');
+  res.redirect('/nn');
 });
 module.exports = router;

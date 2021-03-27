@@ -4,18 +4,19 @@ const core = require('nerdamer/nerdamer.core');
 
 const Connection = require('./connection.js');
 
-const Layer = require('./layer.js'); //Input Function
+const Layer = require('./layer.js');
 
-
-const f = '3y+(5x*y)-(4y^2)+10-y+(3x^2)*2y';
+const f = '';
 const l = [];
 const mejorResultado = 0;
 const mejoresValores = [];
 
 class Network {
   constructor(numberOfLayers) {
+    this.l = l;
+    this.f = f;
     this.layers = numberOfLayers.map((length, index) => {
-      const layer = new Layer(length);
+      const layer = new Layer(length); //l = Letra para el numero de variables 
 
       if (index === 0) {
         let letras = ['x', 'y', 'z', 't', 'v'];
@@ -24,7 +25,11 @@ class Network {
           neuron.setLetra(letras[c]);
           l.push(letras[c]);
           c = c + 1;
-        }); //lo de la letra para el numero de variables
+        }); //Eliminar Letras repetidas en ecuaciones con recursividad.
+
+        for (var i = l.length - 1; i >= 0; i--) {
+          if (l.indexOf(l[i]) !== i) l.splice(i, 1);
+        }
       } else {
         layer.neurons.forEach(neuron => {
           neuron.setBias(neuron.getRandomBias());
@@ -40,7 +45,13 @@ class Network {
     this.iterations = 0;
     this.connectLayers();
     this.mejoresValores = mejoresValores;
-    this.mejorResultado = mejorResultado; // Declare Variables de la Funcion, que a la larga seran los nodos iniciales de la red.
+    this.mejorResultado = mejorResultado;
+  } //Funcion para Setear la Funcion Globalmente.
+
+
+  setF(fn_) {
+    this.f = fn_;
+    return this.f;
   }
 
   toJSON() {
@@ -85,6 +96,7 @@ class Network {
   }
 
   activate(values, h) {
+    // es_Igual = Variable booleana para determinar si se sobrepaso la primer iteracion, despues de input [1, 1]
     var es_Igual = values.length == h.length && values.every(function (element, index) {
       return element === h[index];
     });
@@ -92,7 +104,8 @@ class Network {
     if (es_Igual == true) {
       this.layers[0].neurons.forEach((n, i) => {
         n.cleanOutput();
-        n.setOutput(this.mejorResultado);
+        n.valoresParciales = [];
+        n.setOutput(this.mejoresValores[i]);
       });
     } else {
       this.layers[0].neurons.forEach((n, i) => {
@@ -105,6 +118,29 @@ class Network {
     return this.runInputSigmoid();
   }
 
+  CalcularMejorO() {
+    let temp = [];
+    let arr = [];
+    let res = [];
+    arr = this.layers[2].neurons[0].resultadoGlobal;
+    temp.push(this.layers[2].neurons[0]);
+    this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
+
+    for (let i = 0; i < arr.length; i++) {
+      res = temp.find(B => B.resultadoGlobal[i] === this.mejorResultado); //);
+
+      if (res !== undefined) {
+        this.layers[2].neurons[0].valoresParciales = [];
+        this.layers[2].neurons[0].output = res.valoresParcialesO[i]; // res.output;
+
+        this.layers[2].neurons[0].resultadoGlobal = [];
+        this.layers[2].neurons[0].resultadoGlobal[0] = this.mejorResultado;
+      }
+    }
+
+    this.layers[2].neurons[0].valoresParcialesO = [];
+  }
+
   CalcularMejor() {
     let temp = [];
     let arr = [];
@@ -112,15 +148,15 @@ class Network {
 
     for (var layer = 0; layer < this.layers.length; layer++) {
       for (var neuron = 0; neuron < this.layers[layer].neurons.length; neuron++) {
-        arr.push(this.layers[layer].neurons[neuron].resultadoGlobal);
+        arr.push(this.layers[layer].neurons[neuron].resultadoGlobal[0]);
         temp.push(this.layers[layer].neurons[neuron]);
       }
     }
 
     this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
-    let res = temp.find(B => B.resultadoGlobal === this.mejorResultado);
+    let res = temp.find(B => B.resultadoGlobal[0] === this.mejorResultado);
     obbj.input = res.output;
-    obbj.output = res.resultadoGlobal;
+    obbj.output = res.resultadoGlobal[0];
     this.mejoresValores = obbj.input;
   }
 
@@ -144,15 +180,17 @@ class Network {
               variables.push(individualWeight);
             }
 
-            this.layers[layer].neurons[neuron].setOutput(variables);
-            console.table(this.layers[layer].neurons[neuron].output);
-            this.layers[layer].neurons[neuron].getResultado(f, l, i); //Retorna el resultado Global y lo almacena en "p"
-
-            p = this.layers[layer].neurons[neuron].resultadoGlobal;
-            console.log('nodo ' + i + ' Neurona 6 - Salida', p);
-            this.layers[layer].neurons[neuron].cleanValoresParciales(0);
             this.layers[layer].neurons[neuron].cleanOutput();
-            return this.layers[layer].neurons[neuron].resultadoGlobal;
+            this.layers[layer].neurons[neuron].setOutput(variables); //pasamos a valores parciales el output
+
+            this.layers[layer].neurons[neuron].getResultado(this.f, l, i); //Retorna el resultado Global y lo almacena en "p"
+
+            p = this.layers[layer].neurons[neuron].resultadoGlobal[i];
+            console.log('nodo ' + i + ' Neurona 6 - Salida', p);
+            this.layers[layer].neurons[neuron].cleanValoresParciales(1);
+            this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
+            console.log(' 2 Valores Parciales O', this.layers[layer].neurons[neuron].valoresParcialesO);
+            return this.layers[layer].neurons[neuron].resultadoGlobal[0];
           } else {
             let individualWeight = s.weight * s.from.output;
             this.layers[layer].neurons[neuron].setOutput(individualWeight);
@@ -161,21 +199,24 @@ class Network {
             if (cont === this.layers[0].neurons.length) {
               let a = 'a';
               let p = 0;
-              this.layers[layer].neurons[neuron].getResultado(f, l, a);
-              console.table(this.layers[layer].neurons[neuron].valoresParciales);
+              this.layers[layer].neurons[neuron].getResultado(this.f, l, a); //console.log('Valores Parciales: ');                                       
+              //console.table(this.layers[layer].neurons[neuron].valoresParciales);
+
               this.layers[layer].neurons[neuron].cleanValoresParciales(0);
-              p = this.layers[layer].neurons[neuron].resultadoGlobal; //Para visualizacion del resultado.
+              this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
+              p = this.layers[layer].neurons[neuron].resultadoGlobal[0]; //Para visualizacion del resultado.
 
               console.log('Neurona: ' + f2, p);
               f2++;
             }
 
-            return this.layers[layer].neurons[neuron].resultadoGlobal;
+            return this.layers[layer].neurons[neuron].resultadoGlobal[0];
           }
         });
       }
     }
 
+    this.CalcularMejorO();
     return this.CalcularMejor();
   }
   /*  calculateDeltasSigmoid(target) {
