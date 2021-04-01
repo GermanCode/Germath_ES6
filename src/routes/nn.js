@@ -36,12 +36,12 @@ router.post('/add', async (req, res) => {
   core.setFunction('f', network.l, f);
   var resultadox = core('f('+x+','+y+')').toString();
   network.setF(f);
+
 /*let a = []
 a.push(x,y);
   var resultadox2 = core('f('+a+')').toString();
   console.log('pequeña prueba ', resultadox2)
 */
-
   var trainingData = [{
     input: [x, y],
     output: [resultadox]

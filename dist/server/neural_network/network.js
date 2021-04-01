@@ -10,11 +10,15 @@ const f = '';
 const l = [];
 const mejorResultado = 0;
 const mejoresValores = [];
+const x_i = 0;
+const y_i = 0;
 
 class Network {
   constructor(numberOfLayers) {
     this.l = l;
     this.f = f;
+    this.x_i = x_i;
+    this.y_i = y_i;
     this.layers = numberOfLayers.map((length, index) => {
       const layer = new Layer(length); //l = Letra para el numero de variables 
 
@@ -124,6 +128,7 @@ class Network {
     let res = [];
     arr = this.layers[2].neurons[0].resultadoGlobal;
     temp.push(this.layers[2].neurons[0]);
+    console.log('Array de ResultO', arr);
     this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
 
     for (let i = 0; i < arr.length; i++) {
