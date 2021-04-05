@@ -126,7 +126,6 @@ class Network {
 
     arr = this.layers[2].neurons[0].resultadoGlobal;
     temp.push(this.layers[2].neurons[0]);
-
     this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
 
     for (let i = 0; i < arr.length; i++) {
@@ -157,6 +156,8 @@ class Network {
       obbj.input = res.output;
       obbj.output = res.resultadoGlobal[0];
     this.mejoresValores = obbj.input;
+    this.layers[2].neurons[0].resultadoGlobal= []
+
   }
 
   runInputSigmoid() {

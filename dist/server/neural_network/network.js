@@ -162,6 +162,7 @@ class Network {
     obbj.input = res.output;
     obbj.output = res.resultadoGlobal[0];
     this.mejoresValores = obbj.input;
+    this.layers[2].neurons[0].resultadoGlobal = [];
   }
 
   runInputSigmoid() {
