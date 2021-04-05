@@ -21,7 +21,6 @@ class Neuron {
     this.error = 0;
     this.id = uid();
     this.valoresParcialesO = [];
-    this.resultadoParcialO = 0;
     this.valoresParciales = [];
     this.puntosParciales = [];
     this.resultadoGlobal = [];
@@ -71,21 +70,17 @@ class Neuron {
     if (val === 0) {
       this.output = [];
       this.output = this.valoresParciales;
-      console.log('Valores parciales para hideen: ', this.valoresParciales);
       this.valoresParciales = [];
     } else {
       this.output = [];
       this.output = this.valoresParciales;
-      console.log('Valores parciales para output: ', this.valoresParciales[0]);
-      this.valoresParcialesO.push(this.valoresParciales[0]);
+      this.valoresParcialesO.push(this.valoresParciales);
       this.valoresParciales = [];
     }
   }
 
   cleanPuntosParciales(val) {
     if (val === 0) {
-      this.output = [];
-      this.output = this.puntosParciales;
       this.puntosParciales = [];
     }
   }
@@ -127,15 +122,15 @@ class Neuron {
   getT(n) {
     let arrp = [];
 
-    if (n == 'a') {
+    if (n === 'a') {
       //Multiplicamos por t.
       var fx1_t = fx1.multiply(t);
-      var fy1_t = fy1.multiply(t); //Agregamos el vector inicial.
+      var fy1_t = fy1.multiply(t);
+      arrp = this.valoresParciales; //Agregamos el vector inicial.
 
-      fx1_t = fx1_t.add(this.valoresParciales[0]);
-      fy1_t = fy1_t.add(this.valoresParciales[1]);
-      arrp = this.valoresParciales;
-      console.log(n, arrp);
+      fx1_t = fx1_t.add(arrp[0]);
+      fy1_t = fy1_t.add(arrp[1]);
+      console.log('Valores Parciales Antiguos: ', arrp);
     } else {
       //Multiplicamos por t.
       var fx1_t = fx1.multiply(t);
@@ -143,11 +138,11 @@ class Neuron {
       arrp = this.valoresParciales[0]; //Agregamos el vector inicial.
 
       fx1_t = fx1_t.add(arrp[0]);
-      fy1_t = fy1_t.add(arrp[1]); // console.log(n, arrp);
+      fy1_t = fy1_t.add(arrp[1]);
+      console.log('Valores Parciales Antiguos: ', arrp);
     }
 
-    var e = core('f(' + fx1_t + ' , ' + fy1_t + ')').toString(); //console.log('esto es e2', e);
-    //Derivamos con respecto a t
+    var e = core('f(' + fx1_t + ' , ' + fy1_t + ')').toString(); //Derivamos con respecto a t
 
     var derivT = core.diff(e, 't'); //console.log('esto es dT', derivT.text());
 
@@ -159,8 +154,7 @@ class Neuron {
     //Multiplicamos el valor de t por la derivada obtenida
 
     var x_i = core(arrp[0]);
-    var y_i = core(arrp[1]); //console.log('x_i', x_i.text())
-
+    var y_i = core(arrp[1]);
     x_i = x_i.add(fx1.multiply(rt));
     y_i = y_i.add(fy1.multiply(rt));
     var x_iR = '' + x_i;
@@ -176,16 +170,40 @@ class Neuron {
     arrp = [];
     arrp.push(parseFloat(x_i.text()));
     arrp.push(parseFloat(y_i.text()));
-    this.cleanPuntosParciales(0);
-    console.log('aqui van los nuevos puntos parciales');
-    this.evaluador(this.derivX, this.derivY, arrp);
-    this.valoresParciales = [];
-    this.valoresParciales.push(parseFloat(x_i.text()));
-    this.valoresParciales.push(parseFloat(y_i.text())); //Se calcula el valor final de la funcion maximizada.
 
-    var valorfinal = core('f(' + x_i + ',' + y_i + ')'); //this.resultadoGlobal = parseFloat(valorfinal.text());
+    if (n === 'a') {
+      this.valoresParciales = []; //arrp =  [x_i, y_i]
 
-    console.log('VAAAAAALOR FINAL', valorfinal.text());
+      this.valoresParciales = arrp; //arrp pasa a ser los valores parciales
+
+      this.cleanValoresParciales(0); //arrp pasa a ser el output
+
+      console.log('Nuevos Valores Parciales Hidden: ', arrp);
+      this.cleanPuntosParciales(0);
+      console.log('Nuevos Puntos Parciales Hidden: ');
+      this.evaluador(this.derivX, this.derivY, arrp);
+      this.valoresParciales = [];
+      this.setOutput(arrp[0]);
+      this.setOutput(arrp[1]);
+      this.cleanValoresParciales(0); // output = [x_i, y_i]
+    } else {
+      this.valoresParciales = [];
+      this.valoresParciales = arrp;
+      /*this.output = [];
+      this.output = this.valoresParciales;
+      this.valoresParciales = [];*/
+
+      this.cleanValoresParciales(0);
+      console.log('Nuevos Valores Parciales Output: ', arrp); //Se utiliza Clean(0), para no pushear valores en vPO hasta el final.
+
+      this.cleanPuntosParciales(0);
+      console.log('Nuevos Puntos Parciales Output: ');
+      this.evaluador(this.derivX, this.derivY, arrp);
+      this.valoresParciales = [];
+      this.setOutput(arrp[0]);
+      this.setOutput(arrp[1]);
+      this.cleanValoresParciales(1);
+    }
   }
 
   getResultado(f, l, n) {
@@ -206,23 +224,23 @@ class Neuron {
 
 
     t = new nerdamer("t");
-    console.log(t.text()); //Nueva Funcion
+    console.log(t.text());
 
-    if (n == 'a') {
+    if (n === 'a') {
       //evaluamos las derivadas parciales de la funcion, con los valores parciales del nodo
       this.evaluador(this.derivX, this.derivY, this.valoresParciales);
-      console.log('puntos parciales para hidden', this.puntosParciales);
       this.getT(n); //para hidden layers
 
-      let result = parseFloat(core('f(' + this.puntosParciales + ')').toTeX('decimal'));
+      let result = parseFloat(core('f(' + this.output + ')').toTeX('decimal'));
       this.resultadoGlobal[0] = result;
     } else {
+      console.log('aqui va');
       this.evaluador(this.derivX, this.derivY, this.valoresParciales[0]);
-      console.log('puntos parciales para 6', this.puntosParciales); // para output layers
+      this.getT(n); //console.log('puntos parciales para 6', this.output);
+      // para output layers
 
-      let result = parseFloat(core('f(' + this.puntosParciales + ')').toTeX('decimal'));
+      let result = parseFloat(core('f(' + this.output + ')').toTeX('decimal'));
       this.resultadoGlobal.push(result);
-      this.getT(n);
     }
 
     return this.resultadoGlobal;

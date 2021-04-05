@@ -126,7 +126,6 @@ class Network {
 
     arr = this.layers[2].neurons[0].resultadoGlobal;
     temp.push(this.layers[2].neurons[0]);
-    console.log('Array de ResultO', arr);
 
     this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
 
@@ -154,11 +153,9 @@ class Network {
       }
     }
     this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
-
     let res = temp.find(B => B.resultadoGlobal[0] === this.mejorResultado);
-
-    obbj.input = res.output;
-    obbj.output = res.resultadoGlobal[0];
+      obbj.input = res.output;
+      obbj.output = res.resultadoGlobal[0];
     this.mejoresValores = obbj.input;
   }
 
@@ -171,7 +168,7 @@ class Network {
         const connectionsValue = this.layers[layer].neurons[neuron].inputConnections;
         connectionsValue.map((s, i) => {
           const variables = [];
-          if (layer === this.layers.length - 1) {
+          if (layer === this.layers.length - 1) {;
             let p = 0;
             // 'o' es una variable simbolica para determinar el numero de variables de la funcion
             // basados en el numero de neuronas de entrada en la primer capa.
@@ -186,14 +183,11 @@ class Network {
             this.layers[layer].neurons[neuron].getResultado(this.f, l, i);  //Retorna el resultado Global y lo almacena en "p"
             p = this.layers[layer].neurons[neuron].resultadoGlobal[i];
             console.log('nodo ' + i + ' Neurona 6 - Salida', p);
-
-            this.layers[layer].neurons[neuron].cleanValoresParciales(1);
+            //this.layers[layer].neurons[neuron].cleanValoresParciales(1);
             this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
 
-            return this.layers[layer].neurons[neuron].resultadoGlobal[0];
-            
+          return this.layers[layer].neurons[neuron].resultadoGlobal[0];
           } else {
-
             let individualWeight = s.weight * s.from.output;
             this.layers[layer].neurons[neuron].setOutput(individualWeight);
             cont++;
@@ -203,7 +197,7 @@ class Network {
               let p = 0;
 
               this.layers[layer].neurons[neuron].getResultado(this.f, l, a);
-              this.layers[layer].neurons[neuron].cleanValoresParciales(0);
+              //this.layers[layer].neurons[neuron].cleanValoresParciales(0);
               this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
               p = this.layers[layer].neurons[neuron].resultadoGlobal[0];
               //Para visualizacion del resultado.
