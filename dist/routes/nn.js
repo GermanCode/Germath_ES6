@@ -35,7 +35,7 @@ router.post('/add', async (req, res) => {
   } = req.body;
   const layers = [2, 3, 1];
   const network = new _network.default(layers);
-  const numberOfIterations = 3;
+  const numberOfIterations = 4;
 
   try {
     core.setFunction('f', network.l, f);
@@ -58,6 +58,7 @@ router.post('/add', async (req, res) => {
       console.log('soy los mejores valores: ', network.mejoresValores, 'soy el mejor resultado: ', network.mejorResultado);
       trainingData[0].input = network.mejoresValores;
       trainingData[0].output = network.mejorResultado;
+      console.log('este es el nuevo inicio bich', trainingData[0]);
     }
 
     res.render('neural_network/nn', {

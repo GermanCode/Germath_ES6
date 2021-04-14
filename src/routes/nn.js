@@ -29,7 +29,7 @@ router.post('/add', async (req, res) => {
 
   const network = new Network(layers);
 
-  const numberOfIterations = 3;
+  const numberOfIterations = 4;
 
   try {
 
@@ -56,6 +56,8 @@ a.push(x,y);
 
     trainingData[0].input = network.mejoresValores;
     trainingData[0].output = network.mejorResultado;
+
+    console.log('este es el nuevo inicio bich', trainingData[0]);
     
   }
   res.render('neural_network/nn', {resultado: network.mejorResultado} );

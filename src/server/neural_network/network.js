@@ -1,12 +1,17 @@
 const core = require('nerdamer/nerdamer.core');
 const Connection = require('./connection.js');
 const Layer = require('./layer.js');
+const atan = require('./atah');
 const f = '';
 const l = [];
 const mejorResultado = 0;
 const mejoresValores = [];
 const x_i = 0;
 const y_i = 0;
+const secureOutput = [];
+const secureResult = 0;
+const ct = 0;
+const pDelta = 0;
 
 
 class Network {
@@ -45,6 +50,10 @@ class Network {
     this.connectLayers();
     this.mejoresValores = mejoresValores;
     this.mejorResultado = mejorResultado;
+    this.pDelta = pDelta;
+    this.secureOutput = secureOutput;
+    this.secureResult = secureResult;
+    this.ct = ct;
   }
 
   //Funcion para Setear la Funcion Globalmente.
@@ -90,7 +99,7 @@ class Network {
     this.runInputSigmoid()
 
     // backpropagate
-    //this.calculateDeltasSigmoid(output)
+    //this.calculateDeltasSigmoid(this.mejorResultado)
     //this.adjustWeights()
     //console.log(this.layers.map(l => l.toJSON()))
     //this.setIterations(this.iterations + 1)
@@ -132,9 +141,11 @@ class Network {
       res = temp.find(B => B.resultadoGlobal[i] === this.mejorResultado);//);
       if (res !== undefined) {
         this.layers[2].neurons[0].valoresParciales = [];
+        this.layers[2].neurons[0].output = [];
         this.layers[2].neurons[0].output = res.valoresParcialesO[i]; // res.output;
         this.layers[2].neurons[0].resultadoGlobal = [];
         this.layers[2].neurons[0].resultadoGlobal[0] = this.mejorResultado;
+        this.mejoresValores = [];
       }
     }
     this.layers[2].neurons[0].valoresParcialesO = [];
@@ -153,11 +164,34 @@ class Network {
     }
     this.mejorResultado = arr.reduce((acc, max) => acc > max ? acc : max);
     let res = temp.find(B => B.resultadoGlobal[0] === this.mejorResultado);
+      obbj.input = [];
       obbj.input = res.output;
       obbj.output = res.resultadoGlobal[0];
+    this.mejoresValores = [];  
     this.mejoresValores = obbj.input;
-    this.layers[2].neurons[0].resultadoGlobal= []
+    this.layers[2].neurons[0].resultadoGlobal= [];
+    this.PuntoSeguro();
+  }
 
+  PuntoSeguro(){
+    if(this.ct === 0){
+    this.secureOutput = [];
+    this.secureOutput = this.mejoresValores;
+    this.secureResult = this.mejorResultado;
+    this.ct = 1;
+  }else{
+    if(this.mejorResultado > this.secureResult){
+      this.secureResult = 0;
+      this.secureResult = this.mejorResultado;
+      this.secureOutput = [];
+      this.secureOutput = this.mejoresValores;
+    }else{
+      this.mejorResultado = 0
+      this.mejorResultado = this.secureResult;
+      this.mejoresValores = [];
+      this.mejoresValores = this.secureOutput;
+    }
+  }
   }
 
   runInputSigmoid() {
@@ -184,11 +218,14 @@ class Network {
             this.layers[layer].neurons[neuron].getResultado(this.f, l, i);  //Retorna el resultado Global y lo almacena en "p"
             p = this.layers[layer].neurons[neuron].resultadoGlobal[i];
             console.log('nodo ' + i + ' Neurona 6 - Salida', p);
+
+            console.log('----------------------------------------------------------------------')
             //this.layers[layer].neurons[neuron].cleanValoresParciales(1);
             this.layers[layer].neurons[neuron].cleanPuntosParciales(0);
 
           return this.layers[layer].neurons[neuron].resultadoGlobal[0];
           } else {
+            this.layers[layer].neurons[neuron].cleanOutput();
             let individualWeight = s.weight * s.from.output;
             this.layers[layer].neurons[neuron].setOutput(individualWeight);
             cont++;
@@ -204,6 +241,7 @@ class Network {
               //Para visualizacion del resultado.
               console.log('Neurona: ' + f2, p);
               f2++;
+              console.log('--------------------------------------------------')
             }
             return this.layers[layer].neurons[neuron].resultadoGlobal[0];
           }
@@ -214,26 +252,27 @@ class Network {
     return this.CalcularMejor();
   }
 
-  /*  calculateDeltasSigmoid(target) {
+    calculateDeltasSigmoid(target /*this.mejoresValores[x,y]*/ ) {
       for (let layer = this.layers.length - 1; layer >= 0; layer--) {
         const currentLayer = this.layers[layer]
   
         for (let neuron = 0; neuron < currentLayer.neurons.length; neuron++) {
           const currentNeuron = currentLayer.neurons[neuron]
-          let output = currentNeuron.output;
-  
+            
           let error = 0;
           if (layer === this.layers.length -1 ) {
+            let output = this.pDelta;
             // Is output layer
-            error = target[neuron] - output;
-             //console.log('calculate delta, error, last layer', error)
+            error = target - output;
+             console.log('calculate delta, error, last layer', error)
           }
           else {
+            let output = currentNeuron.resultadoGlobal[0];
             // Other than output layer
             for (let k = 0; k < currentNeuron.outputConnections.length; k++) {
               const currentConnection = currentNeuron.outputConnections[k]
               error += currentConnection.to.delta * currentConnection.weight
-             //console.log('calculate delta, error, inner layer', error)
+             console.log('calculate delta, error, inner layer', error)
             }
   
   
@@ -243,6 +282,8 @@ class Network {
         }
       }
     }
+
+    /*
   
     adjustWeights() {
       
