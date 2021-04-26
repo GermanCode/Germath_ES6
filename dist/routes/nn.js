@@ -21,7 +21,7 @@ router.get('/show', (req, res) => {
 });
 router.post('/add', async (req, res) => {
   var cont = 0;
-  var err = 0.01;
+  var err = 0.00001;
   var datos = [];
   var px, py, px1t, py1t; // Estas variables seran usadas solo para la visualizacion del resultado en tablas
   // ordenadas debido a las trasformaciones que sufre la variable a su paso
@@ -50,16 +50,18 @@ router.post('/add', async (req, res) => {
     var trainingData = [{
       input: [x, y],
       output: [resultadox]
-    }]; //while(Math.abs(fx1) > err || Math.abs(fy1) > err ){
+    }];
 
-    for (let i = 0; i < numberOfIterations; i++) {
-      console.table('Iteracion ' + i);
+    while (Math.abs(network.pDelta) >= err && network.iterations <= 60) {
+      //for (let i = 0; i < numberOfIterations; i++) {
+      console.table('Iteracion ' + network.iterations);
       network.train(trainingData[0].input, trainingData[0].output);
       console.log('soy los mejores valores: ', network.mejoresValores, 'soy el mejor resultado: ', network.mejorResultado);
       trainingData[0].input = network.mejoresValores;
       trainingData[0].output = network.mejorResultado;
       console.log('este es el nuevo inicio bich', trainingData[0]);
-    }
+    } //}
+
 
     res.render('neural_network/nn', {
       resultado: network.mejorResultado

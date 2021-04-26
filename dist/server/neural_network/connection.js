@@ -7,7 +7,7 @@ class Connection {
 
     this.weight = Math.random() * (1.5 - 0.5) + 0.5; //Cambio a realizar a ese peso en esa conexion de esa neurona en esa capa
 
-    this.change = 0;
+    this.change = [];
   }
 
   toJSON() {
@@ -25,6 +25,10 @@ class Connection {
 
   setChange(val) {
     this.change = val;
+  }
+
+  clearChange() {
+    this.change = [];
   }
 
 }

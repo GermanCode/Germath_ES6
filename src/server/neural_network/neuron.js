@@ -13,11 +13,12 @@ class Neuron {
     // delta is used to store a percentage of change in the weight
     this.delta = 0;
     this.output = [];
-    this.error = 0;
+    this.error = [];
     this.id = uid();
     this.valoresParcialesO = [];
     this.valoresParciales = [];
     this.puntosParciales = [];
+    this.puntosParcialesO = [];
     this.resultadoGlobal = [];
     this.derivX = 0;
     this.derivY = 0;
@@ -77,6 +78,9 @@ class Neuron {
   cleanPuntosParciales(val) {
     if (val === 0) {
       this.puntosParciales = []
+    } else {
+      this.puntosParcialesO.push(this.puntosParciales);
+      this.puntosParciales = [];
     }
 
   }
@@ -196,6 +200,7 @@ class Neuron {
       this.cleanPuntosParciales(0);
       console.log('Nuevos Puntos Parciales Output: ')
       this.evaluador(this.derivX, this.derivY, this.output);
+      this.cleanPuntosParciales(1);
       this.valoresParciales = [];
       this.setOutput(this.output[0]);
       this.setOutput(this.output[1]);
@@ -221,7 +226,7 @@ class Neuron {
 
     //Generamos t symbol
     t = new nerdamer("t");
-    console.log(t.text());
+    //console.log(t.text());
 
     if (n === 'a') {
       //evaluamos las derivadas parciales de la funcion, con los valores parciales del nodo
@@ -233,7 +238,7 @@ class Neuron {
     } else {
       this.evaluador(this.derivX, this.derivY, this.valoresParciales[0]);
       this.getT(n);
-      //console.log('puntos parciales para 6', this.output);
+      
       // para output layers
       let result = parseFloat(core('f(' + this.output + ')').toTeX('decimal'));
       this.resultadoGlobal.push(result);
@@ -242,7 +247,12 @@ class Neuron {
   }
 
   setError(val) {
-    this.error = val
+    this.error.push(val);
   }
+
+  cleanError(){
+    this.error = [];
+  }
+
 }
 module.exports = Neuron;
