@@ -16,7 +16,6 @@ const ct = 0;
 const pDelta = 0.1;
 const c = 0;
 
-
 class Network {
   constructor(numberOfLayers) {
     this.l = l;
@@ -282,7 +281,7 @@ class Network {
         let output = currentNeuron.resultadoGlobal[0];
         let pp = [];
         pp = currentNeuron.puntosParciales;
-        let error = 0.01;
+        let error = 0.001;
         for (let i = 0; i < pp.length; i++) {
           if (target === output) {
             if (parseFloat(pp[i]) > 0) {

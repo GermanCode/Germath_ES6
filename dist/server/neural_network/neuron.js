@@ -222,10 +222,10 @@ class Neuron {
     } else {
       this.derivY = 0;
     } //Visualizamos por consola las derivadas
-    //console.log('dX: ', this.derivX.text());
-    //console.log('dY: ', this.derivY.text());
-    //Generamos t symbol
 
+
+    console.log('dX: ', this.derivX.text());
+    console.log('dY: ', this.derivY.text()); //Generamos t symbol
 
     t = new nerdamer("t"); //console.log(t.text());
 

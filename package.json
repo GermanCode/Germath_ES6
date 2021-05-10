@@ -33,11 +33,12 @@
     "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
     "express-validator": "^6.10.0",
+    "function-plot": "^1.22.7",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "nerdamer": "^1.1.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "timeago.js": "^4.0.2",
-    "nerdamer": "^1.1.7"
+    "timeago.js": "^4.0.2"
   }
 }

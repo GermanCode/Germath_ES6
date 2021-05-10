@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 import Network from '../server/neural_network/network';
-const core = require('../public/js/nerdamer.core');
+const core = require('nerdamer/nerdamer.core');
+const datos = [];
 //creo que aqui llamamos los archivos de neuralnetwork, y comienza despues del post a ejecutarse
 
 const pool = require('../database');
@@ -17,11 +18,10 @@ router.get('/show', (req, res) => {
 router.post('/add', async (req, res) => {
 
     var cont = 0;
-    var err = 0.00001;
-    var datos = [];
+    var err = 0.000001;
     var px, py, px1t, py1t; // Estas variables seran usadas solo para la visualizacion del resultado en tablas
                             // ordenadas debido a las trasformaciones que sufre la variable a su paso
-//Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
+                            //Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
     
   const { f, x, y, description } = req.body;
 
@@ -29,13 +29,17 @@ router.post('/add', async (req, res) => {
 
   const network = new Network(layers);
 
-  const numberOfIterations = 4;
-
   try {
+    var c = 0;
 
   core.setFunction('f', network.l, f);
   var resultadox = core('f('+x+','+y+')').toString();
   network.setF(f);
+  var deriv = [];
+
+  for (let index = 0; index < network.l.length; index++) {
+    deriv.push(core.diff(f, network.l[index]).toString());
+  }
 
 /*let a = []
 a.push(x,y);
@@ -58,10 +62,13 @@ while(Math.abs(network.pDelta) >= err && network.iterations <= 60){
     trainingData[0].output = network.mejorResultado;
 
     console.log('este es el nuevo inicio bich', trainingData[0]);
+
     
+    datos.push({iteraciones: c, X: network.mejoresValores[0], Y: network.mejoresValores[1], resultado: network.mejorResultado, error: Math.abs(network.pDelta) })
+    c =  c+1;
   }
 //}
-  res.render('neural_network/nn', {resultado: network.mejorResultado} );
+  res.render('neural_network/nn', {resultado: network.mejorResultado, funcion: f, derivadas: deriv, datos: datos});
 
 } catch (error) {
   console.log('error', error);
