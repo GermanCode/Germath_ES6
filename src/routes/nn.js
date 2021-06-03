@@ -18,12 +18,21 @@ router.get('/show', (req, res) => {
 router.post('/add', async (req, res) => {
 
     var cont = 0;
-    var err = 0.000001;
+    var err = 0.0001;
     var px, py, px1t, py1t; // Estas variables seran usadas solo para la visualizacion del resultado en tablas
                             // ordenadas debido a las trasformaciones que sufre la variable a su paso
                             //Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
+
     
-  const { f, x, y, description } = req.body;
+  const { f, x, y, description, ri, ari } = req.body;
+
+  console.log(req.body);
+
+  console.log('ari', ari);
+
+  var h = ari.split(',');
+  console.log(h)
+
 
   const layers = [ 2, 3, 1 ];
 

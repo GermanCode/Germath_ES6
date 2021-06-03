@@ -209,9 +209,9 @@ class Network {
         arr.push(this.layers[layer].neurons[neuron].error[0]);
         this.layers[layer].neurons[neuron].resultadoGlobal = [];
       }
-    }
+    } //console.table(arr);
 
-    console.table(arr);
+
     let res = arr.reduce((acc, min) => acc > min ? min : acc);
     console.log('Delta', res);
     this.pDelta = res;
@@ -362,8 +362,7 @@ class Network {
       const currentLayer = this.layers[layer];
 
       for (let neuron = 0; neuron < currentLayer.neurons.length; neuron++) {
-        const currentNeuron = currentLayer.neurons[neuron];
-        console.log(currentNeuron.error, 'error');
+        const currentNeuron = currentLayer.neurons[neuron]; //console.log(currentNeuron.error, 'error');
 
         for (let i = 0; i < currentNeuron.inputConnections.length; i++) {
           const currentConnection = currentNeuron.inputConnections[i];
@@ -375,8 +374,7 @@ class Network {
 
           change.splice(0, 0, this.learningRate * currentNeuron.error[i] + 1);
           currentConnection.setChange(change);
-          currentConnection.setWeight(currentConnection.weight * change[0]);
-          console.log(currentConnection.weight, 'w', i, currentNeuron.puntosParciales);
+          currentConnection.setWeight(currentConnection.weight * change[0]); //console.log(currentConnection.weight, 'w', i, currentNeuron.puntosParciales )
         }
 
         currentNeuron.cleanPuntosParciales(0);

@@ -10,17 +10,57 @@
             </div>
             <div class="form-group">
               <h2 class="text-center">
-              <label for="">Vector Inicial</label></h2>
+                <label for="">Vector Inicial</label>
+              </h2>
               <div class="input-group text-center">
-                <input name="x" id="x" type="text" required class="form-control"
-                  placeholder="x">
+                <input name="x" id="x" type="text" required class="form-control" placeholder="x">
                 <span class="input-group-addon">-</span>
-                <input name="y" id="y" type="text" required class="form-control"
-                  placeholder="y">
+                <input name="y" id="y" type="text" required class="form-control" placeholder="y">
               </div>
             </div>
             <div class="form-group">
-              <textarea name="description" rows="2" class="form-control" placeholder="Description"></textarea>
+              <b>Restricciones?</b>
+              <input type="checkbox" name="check" id="check" value="1"
+                onchange="javascript:mostrarPanelRestricciones()" />
+            </div>
+            <div class="form-group">
+              <div id="content" style="display: none;">
+                <div class="container mx-auto input-group">
+                  <div class="row">
+                    <div class="col">
+                      <input type="text" id="inputLadoIzq" class="form-control" name="inputLadoIzq"
+                        placeholder="Lado Izq">
+                    </div>
+                    <div class="col text-center input-group-btn">
+                      <select type="button" class="btn btn-secondary" id="signo" name="signo"
+                        onchange="javascript:selectSignoParaFuncion()">
+                        <option><a class="dropdown-item" href="#"> Signo </a></option>
+                        <option><a class="dropdown-item" href="#"> < </a></option>
+                        <option><a class="dropdown-item" href="#"> > </a></option>
+                        <option><a class="dropdown-item" href="#"> = </a></option>
+                        <option><a class="dropdown-item" href="#"> <= </a></option>
+                        <option><a class="dropdown-item" href="#"> >= </a></option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="inputLadoDer" name="inputLadoDer"
+                        placeholder="Lado Der">
+                    </div>
+                  </div>
+                  <div class="form-group"></div>
+                  <div class="mx-auto row p-1">
+                    <button type="button" id="addRestric" name="addRestric" onclick="javascript:llenarHidden()"> +
+                    <button type="button" id="delRestric" name="delRestric" onclick="javascript:eliminarRestriccion()"> -
+                        <input id="restriccionCompleta" name="restriccionCompleta" type="hidden">
+                        <input id="ri" name="ri" type="hidden">
+                        <input id="ari" name="ari" type="hidden">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="form-group">
+              <div id = "restric"></div>
             </div>
             <div class="form-group"></div>
             <button class="btn btn-success btn-block">RUN</button>
