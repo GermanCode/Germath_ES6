@@ -1,64 +1,61 @@
-<div class="container-fluid allpage" style="text-align:center; ">
-	<div class="allpage">
-		<div class='recuadro2 text-center' id="uno" style="padding: 5px; border: 2px solid black;">
-			<h2>
-				<b>Max f(x , y) = </b> \({{ funcion }}\)
-			</h2>
-			<h1>{{ resultado }}</h1>
-			<h3 style="display: none;">Restricciones?</h3>
-			<h4 style="display: none;">aqui van...</h4>
-		</div>
-		<div class='recuadro' id="tres" onload="draw()" style="background-color: white; border: 2px solid #000000;">
-			<div id="box" style="display: inline-block;">
-				<div id="box-content" class="card box-content">
-					<input type="hidden" name="funcion" id="funcion" value={{ funcion }}>
-					<div id="plot" style="overflow-y: auto;"></div>
-				</div>
-			</div>
-		</div>
+<div class="container-fluid allpage" style="text-align:center;">
+  <div class="allpage">
+    <div class='resultado text-center' id="uno" style="padding: 5px; border: 2px solid black; width: {{ wR }};" onload="loader()">
+      <h3>
+        <b>Max f(x , y) = </b> \({{ funcion }}\)
+      </h3>
+      <h2>{{ resultado }}</h2></div>
 
-		<div class='recuadro3' id="cuatro">
-			<input type="hidden" id="dX" value={{ dX }}>
-			<input type="hidden" id="dY" value={{ dY }}>
+      <div id="panel" class="right" style ="display: {{ visibleR }}; padding: 5px; border: 2px solid black;">
+        <h5>Restricciones:</h5>
+        <table class="table" type="hidden">
+          <tbody> {{#each restrict}} <tr>
+              <td>{{this}}</td>
+            </tr>{{/each}}
+          </tbody>
+        </table>
+      </div>
+    
+    <div class='grafico' id="tres" onload="draw()" style="background-color: white; border: 2px solid #000000;">
+      <div id="box" style="display: inline-block;">
+        <div id="box-content" class="card box-content">
+          <input type="hidden" name="funcion" id="funcion" value={{ funcion }}>
+          <div id="plot" style="overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
 
-			<div id="div1" class=" p-1 col-md-4">
-				<div id="box" style="display: inline-block;">
-					<div id="box-content" class="card box-content" style="width: 100%; border: 2px solid #000000;">
-						<table class="table" style="font-family: 'Libre Baskerville'; font-size: 13px;">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">X</th>
-									<th scope="col">Y</th>
-									<th scope="col">Solución</th>
-									<th scope="col">Error</th>
-								</tr>
-							</thead>
-							<tbody>
-								{{#each datos}}
-								<tr>
-									<td>{{ iteraciones }}</td>
-									<td>{{ X }}</td>
-									<td>{{ Y }}</td>
-									<td>{{resultado}}</td>
-									<td>{{error}}</td>
-								</tr>
-								{{/each}}
-							</tbody>
-						</table>
-					</div>
-					<table class="table" type="hidden">
-						<thead>
-							<tr>
-								<th scope="col">Derivadas</th>
-							</tr>
-						</thead>
-						<tbody> {{#each derivadas}} <tr>
-								<td>{{this}}</td>
-							</tr>{{/each}}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<script src="/js/draw.js"></script>
+    <div class='tabla' id="cuatro" style="background-color: white; border: 2px solid #000000;">
+      <input type="hidden" id="dX" value={{ dX }}>
+      <input type="hidden" id="dY" value={{ dY }}>
+
+      <div id="div1" class=" p-1 col-md-4">
+        <div id="box" style="display: inline-block;">
+          <div id="box-content" class="card box-content" style="width: 100%; border: 1px solid #000000;">
+            <table class="table" style="font-family: 'Libre Baskerville'; font-size: 13px;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">X</th>
+                  <th scope="col">Y</th>
+                  <th scope="col">Solución</th>
+                  <th scope="col">Error</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each datos}}
+                <tr>
+                  <td>{{ iteraciones }}</td>
+                  <td>{{ X }}</td>
+                  <td>{{ Y }}</td>
+                  <td>{{resultado}}</td>
+                  <td>{{error}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/draw.js"></script>

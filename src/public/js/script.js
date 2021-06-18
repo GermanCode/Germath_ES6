@@ -27,6 +27,7 @@ function SidebarCollapse () {
 }
 
 function mostrarPanelRestricciones() {
+    document.querySelector('footer').style.visibility= 'hidden';
     element = document.getElementById("content");
     check = document.getElementById("check");
     if (check.checked) {
@@ -40,6 +41,7 @@ function selectSignoParaFuncion() {
     var cod = document.getElementById("signo").value;
     return cod;
 };
+
 var ri = 1;
 var ari = [];
 function llenarHidden(){
@@ -55,6 +57,7 @@ function llenarHidden(){
     input.name ='restrict'+ri;
     input.id ='restrict'+ri;
     input.style = "margin-top: 5px";
+    input.readOnly = true;
 
     padre.appendChild(input);
     document.getElementById ("restrict"+ri).value = equa;
@@ -74,6 +77,13 @@ function eliminarRestriccion(){
     elem.parentNode.removeChild(elem);
 };
 
+function aumentarPanel(){
+    var el = document.getElementById("panel").style.display;
+    console.log(el);
+    //document.getElementById('panel').style.height = "400px";
+    document.getElementById("pr").innerHTML = el;
+};
+
 function alerta(){
     var mensaje;
     var opcion = confirm("Clicka en Aceptar o Cancelar");
@@ -84,3 +94,29 @@ function alerta(){
     }
     document.getElementById("ejemplo").innerHTML = mensaje;
 };  
+
+//Loader prueba
+function loader(){
+window.onload = function () {
+    var contenedor = document.getElementById('cont_carga');
+    contenedor.style.visibility = 'hidden';
+    contenedor.style.opacity= '0';
+};
+}
+
+function loading(){
+    var contenedor = document.getElementById('cont_carga');
+    contenedor.style.display = 'block';
+   var inputs = document.getElementById("fp").elements;
+  
+
+// Iterate over the form controls
+for (i = 0; i < inputs.length; i++) {
+  if (inputs[i].type === "text") {
+    // Update text input
+    console.log(inputs[i]);
+    inputs[i].setAttribute("readonly", "");
+    
+  }
+}
+}

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 import Network from '../server/neural_network/network';
 const core = require('nerdamer/nerdamer.core');
-const datos = [];
+var datos = [];
 //creo que aqui llamamos los archivos de neuralnetwork, y comienza despues del post a ejecutarse
 
 const pool = require('../database');
@@ -18,7 +18,7 @@ router.get('/show', (req, res) => {
 router.post('/add', async (req, res) => {
 
     var cont = 0;
-    var err = 0.0001;
+    var err = 0.000001;
     var px, py, px1t, py1t; // Estas variables seran usadas solo para la visualizacion del resultado en tablas
                             // ordenadas debido a las trasformaciones que sufre la variable a su paso
                             //Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
@@ -26,19 +26,17 @@ router.post('/add', async (req, res) => {
     
   const { f, x, y, description, ri, ari } = req.body;
 
-  console.log(req.body);
-
-  console.log('ari', ari);
-
-  var h = ari.split(',');
-  console.log(h)
-
+  var arrayRestrict = ari.split(',');
+  console.table(arrayRestrict);
 
   const layers = [ 2, 3, 1 ];
 
   const network = new Network(layers);
+  datos = [];
+  network.setRestrictions(arrayRestrict);
 
   try {
+    
     var c = 0;
 
   core.setFunction('f', network.l, f);
@@ -50,11 +48,6 @@ router.post('/add', async (req, res) => {
     deriv.push(core.diff(f, network.l[index]).toString());
   }
 
-/*let a = []
-a.push(x,y);
-  var resultadox2 = core('f('+a+')').toString();
-  console.log('pequeña prueba ', resultadox2)
-*/
   var trainingData = [{
     input: [x, y],
     output: [resultadox]
@@ -76,8 +69,20 @@ while(Math.abs(network.pDelta) >= err && network.iterations <= 60){
     datos.push({iteraciones: c, X: network.mejoresValores[0], Y: network.mejoresValores[1], resultado: network.mejorResultado, error: Math.abs(network.pDelta) })
     c =  c+1;
   }
+
+  console.log('arrayrestrict', arrayRestrict[0]);
+  console.log('arrayrestrict', arrayRestrict.length);
+
+
+  if(arrayRestrict.includes('')) {
+      var v = 'none';
+      var wR = '100%'
+  }else{
+    var v = 'inline-block';
+    var wR = '84%'
+  }
 //}
-  res.render('neural_network/nn', {resultado: network.mejorResultado, funcion: f, derivadas: deriv, datos: datos});
+  res.render('neural_network/nn', {resultado: network.mejorResultado, funcion: f, derivadas: deriv, datos: datos, visibleR: v, wR: wR, restrict: arrayRestrict });
 
 } catch (error) {
   console.log('error', error);

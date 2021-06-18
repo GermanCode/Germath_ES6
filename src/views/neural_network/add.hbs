@@ -1,21 +1,24 @@
 <div id="add" class="container p-4">
   <div class="row">
     <div class="col-md-4 mx-auto">
-      <div class="card" style="border: black solid 1px;;">
+      <div class="card" style="border: black solid 1px;">
+            <div id="cont_carga" class="text-center" style="display: none;">
+              <h5>La Red Neuronal esta optimizando la funcion...</h5>
+            <div id="carga"></div></div>
         <div class="card-body">
-          <form action="/nn/add" method="POST">
+          <form id="fp" action="/nn/add" method="POST">
             <div class="form-group">
               <h3 class="text-center">Función</h1>
-                <input type="text" name="f" placeholder="Funcion" class="form-control" autofocus>
+                <input type="text" name="f" id= "f" placeholder="Funcion" class="form-control" autofocus>
             </div>
             <div class="form-group">
               <h2 class="text-center">
                 <label for="">Vector Inicial</label>
               </h2>
-              <div class="input-group text-center">
-                <input name="x" id="x" type="text" required class="form-control" placeholder="x">
+              <div class="input-group text-center mx-auto">
+                <input name="x" id="x" type="text" required class="form-control text-center" placeholder="X">
                 <span class="input-group-addon">-</span>
-                <input name="y" id="y" type="text" required class="form-control" placeholder="y">
+                <input name="y" id="y" type="text" required class="form-control text-center" placeholder="Y">
               </div>
             </div>
             <div class="form-group">
@@ -50,7 +53,8 @@
                   <div class="form-group"></div>
                   <div class="mx-auto row p-1">
                     <button type="button" id="addRestric" name="addRestric" onclick="javascript:llenarHidden()"> +
-                    <button type="button" id="delRestric" name="delRestric" onclick="javascript:eliminarRestriccion()"> -
+                      <button type="button" id="delRestric" name="delRestric"
+                        onclick="javascript:eliminarRestriccion()"> -
                         <input id="restriccionCompleta" name="restriccionCompleta" type="hidden">
                         <input id="ri" name="ri" type="hidden">
                         <input id="ari" name="ari" type="hidden">
@@ -63,10 +67,25 @@
               <div id = "restric"></div>
             </div>
             <div class="form-group"></div>
-            <button class="btn btn-success btn-block">RUN</button>
+            <div class="form-group">
+              <h5 style="text-align: center;">Variables de la RNA</h5>
+              <div class="input-group text-center mx-auto">
+                <b style="padding-right: 3px;">Error: </b>
+                <input name="gE" id="gE" type="number" class="form-control text-center" value="0.00001" step="0.00001" min="0.00001" max="0.9" style="max-width: 100px;">
+                
+                <b style="padding-right: 3px; padding-left: 5px;">Aprendizaje: </b>
+                <input name="lR" id="lR" type="number" class="form-control text-center" step="0.1" value="0.1" min="0.1" max="0.9" style="max-width: 60px;">
+              </div>
+            </div>
+            <div class="form-group"></div>
+            <button class="btn btn-success btn-block" onclick="loading()">RUN</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+
+

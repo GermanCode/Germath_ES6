@@ -2,6 +2,7 @@ const core = require('nerdamer/nerdamer.core');
 const Connection = require('./connection.js');
 const Layer = require('./layer.js');
 const atan = require('./atah');
+const e = [];
 const f = '';
 const l = [];
 const mejorResultado = 0;
@@ -15,6 +16,7 @@ const securePoint = [];
 const ct = 0;
 const pDelta = 0.1;
 const c = 0;
+const restrict = [];
 
 class Network {
   constructor(numberOfLayers) {
@@ -58,6 +60,8 @@ class Network {
     this.securePoint = securePoint;
     this.ct = ct;
     this.c = c;
+    this.restrict = restrict;
+    this.e = e;
   }
   //Funcion para Setear la Funcion Globalmente.
   setF(fn_) {
@@ -148,7 +152,7 @@ class Network {
         if (this.securePoint === undefined) { this.securePoint = this.mejorPunto }
         this.layers[2].neurons[0].resultadoGlobal = [];
         this.layers[2].neurons[0].resultadoGlobal[0] = this.mejorResultado;
-        this.mejoresValores= [];
+        this.mejoresValores = [];
       }
     }
     this.layers[2].neurons[0].valoresParcialesO = [];
@@ -182,7 +186,6 @@ class Network {
       for (var neuron = 0; neuron < this.layers[layer].neurons.length; neuron++) {
         arr.push(this.layers[layer].neurons[neuron].error[0]);
         this.layers[layer].neurons[neuron].resultadoGlobal = [];
-
       }
     }
     //console.table(arr);
@@ -190,7 +193,32 @@ class Network {
     console.log('Delta', res);
     this.pDelta = res;
   }
+
+  setRestrictions(restrictions) {
+    for (let i = 0; i < restrictions.length; i++) {
+      restrict.push(restrictions[i]);
+    }
+  }
+
+  evalRestrict(mejoresValores) {
+    this.e = [];
+    for (let i = 0; i < mejoresValores.length; i++) {
+      this.e.push(parseFloat(core('' + restrict[i], { x: mejoresValores[0], y: mejoresValores[1] })));
+    }
+  }
+
+  prueba() {
+    this.mejorResultado = 0
+    this.mejorResultado = this.secureResult;
+    this.mejoresValores = [];
+    this.mejoresValores = this.secureOutput;
+    this.mejorPunto = [];
+    this.mejorPunto = this.securePoint;
+    this.securePoint = [];
+  }
+
   PuntoSeguro() {
+    this.evalRestrict(this.mejoresValores);
     if (this.ct === 0) {
       this.secureOutput = [];
       this.secureOutput = this.mejoresValores;
@@ -199,12 +227,16 @@ class Network {
       this.ct = 1;
     } else {
       if (this.mejorResultado > this.secureResult) {
-        this.secureResult = 0;
-        this.secureResult = this.mejorResultado;
-        this.secureOutput = [];
-        this.secureOutput = this.mejoresValores;
-        this.securePoint = [];
-        this.securePoint = this.mejorPunto;
+        if (!this.e.includes(0)) {
+          this.secureResult = 0;
+          this.secureResult = this.mejorResultado;
+          this.secureOutput = [];
+          this.secureOutput = this.mejoresValores;
+          this.securePoint = [];
+          this.securePoint = this.mejorPunto;
+        } else {
+          this.prueba();
+        }
       } else {
         this.mejorResultado = 0
         this.mejorResultado = this.secureResult;
@@ -215,6 +247,7 @@ class Network {
         this.securePoint = [];
       }
     }
+
   }
   runInputSigmoid() {
     let f2 = 3;
@@ -285,7 +318,7 @@ class Network {
         for (let i = 0; i < pp.length; i++) {
           if (target === output) {
             if (parseFloat(pp[i]) > 0) {
-              error = error*parseFloat(pp[i]);
+              error = error * parseFloat(pp[i]);
               currentNeuron.setError(error);
             } else {
               error = (error * parseFloat(pp[i]));
@@ -294,17 +327,17 @@ class Network {
           } else {
             if (parseFloat(pp[i]) > 0) {
               error = ((target - output) / target);
-              currentNeuron.setError((error+parseFloat(pp[i])));
+              currentNeuron.setError((error + parseFloat(pp[i])));
             } else {
               error = (((target - output) / target));
-              currentNeuron.setError((error+parseFloat(pp[i])));
+              currentNeuron.setError((error + parseFloat(pp[i])));
             }
           }
         }
       }
     }
   }
-  cleanChange(){
+  cleanChange() {
     for (var layer = 0; layer < this.layers.length; layer++) {
       const currentLayer = this.layers[layer];
       for (var neuron = 0; neuron < this.layers[layer].neurons.length; neuron++) {
@@ -326,15 +359,15 @@ class Network {
         for (let i = 0; i < currentNeuron.inputConnections.length; i++) {
           const currentConnection = currentNeuron.inputConnections[i];
           var change = currentConnection.change;
-          if(currentNeuron.error[i] === undefined){
+          if (currentNeuron.error[i] === undefined) {
             currentNeuron.error[i] = 0.001
           }
-          change.splice(0, 0, ((this.learningRate * currentNeuron.error[i]) + 1) );
+          change.splice(0, 0, ((this.learningRate * currentNeuron.error[i]) + 1));
           currentConnection.setChange(change);
           currentConnection.setWeight(currentConnection.weight * change[0]);
           //console.log(currentConnection.weight, 'w', i, currentNeuron.puntosParciales )
         }
-        currentNeuron.cleanPuntosParciales(0); 
+        currentNeuron.cleanPuntosParciales(0);
       }
     }
     this.CalcularErrorMinimo();

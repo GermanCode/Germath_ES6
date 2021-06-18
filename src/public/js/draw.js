@@ -8,8 +8,8 @@ function draw() {
             target: '#plot',
             width: 450,
             height: 420,
-            disableZoom: true,
-            yAxis: { label: 'Y', domain: [-4, 4] },
+            disableZoom: false,
+            yAxis: { label: 'Y', domain: [-5, 5] },
             xAxis: { label: 'X', domain: [-6, 6] },
             grid: true,
             data: [{

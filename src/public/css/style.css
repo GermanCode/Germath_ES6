@@ -33,11 +33,11 @@
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
-	animation-duration: 2s;
+	animation-duration: 3s;
 }
 
 .fade-no {
-    animation-duration: 10s;
+    animation-duration: 5s;
     opacity: 0;
 }
 
@@ -63,7 +63,6 @@
     display: block;
 }
 
-
 .sticky-offset {
     top: 56px;
 }
@@ -81,7 +80,6 @@
     height: 50px;
     color: white;    
 }
-
 
 /* Submenu item*/
 #sidebar-container .list-group .sidebar-submenu a {
@@ -123,35 +121,84 @@
   padding-left: 10px;
 }
 
-.recuadro {
+.grafico {
 	border:1px solid black;
-	width:39.5%;
+	width:43.5%;
 	display:inline-block;
 	height:76.5%;
 	overflow:scroll;
 }
 
-.recuadro3 {
+.tabla {
 	border:1px solid black;
-	width:59.5%;
+	width:55.5%;
 	display:inline-block;
 	height:76.5%;
 	overflow:scroll;
 }
-.recuadro2 {
+
+.right{
+	width:15%;
+	display:inline-block;
+	height:20%;
+	overflow:auto;
+    font-family: 'Libre Baskerville';
+}
+
+.resultado {
 	border:1px solid black;
 	width:100%;
 	display:inline-block;
-	height:22.5%;
+	height:20%;
 	overflow:hidden;
     font-family: 'Libre Baskerville';
 }
 
+
 .allpage {
-    height: 580px;
+    z-index: 10;
+    height: 610px;
 	margin:0;
 	padding:0;
 	width:100%;
 	background-color:whitesmoke;
     position: relative;
+
+}
+
+#cont_carga{
+    position: 'absolute';
+    background-color: rgb(187, 247, 179);
+    z-index: 20;
+    opacity: .9;
+}
+
+#carga {
+    border: 25px solid rgb(235, 235, 235);
+    border-color: #28a745;
+    border-top-style: groove;
+    height: 175px;
+    width: 175px;
+    border-radius: 110%;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    -webkit-animation: girar 1.5s linear infinite;
+    -o-animation: girar 1.5s linear infinite;
+    animation: girar 1.5s linear infinite;
+    
+}
+
+@keyframes girar {
+    from { transform: rotate(0deg);}
+    to { transform: rotate(360deg);}
+    
+}
+
+#imagenb{
+    background: url('/img/loading.gif') 50% 50% no-repeat rgb(249,249,249);
 }
