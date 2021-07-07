@@ -1,7 +1,7 @@
 import ExpressServer from "./server/ExpressServer"
 import dotenv from "dotenv"
 
-dotenv.config()
+dotenv.config();
 
-    //Start Express JS Server
+    //Inicio de Express JS Server
     const expressServer = new ExpressServer();

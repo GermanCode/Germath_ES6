@@ -1,3 +1,5 @@
+"use strict";
+
 var restrictionsinput = 1;
 var arrayrestrictionsinput = [];
 
@@ -5,24 +7,28 @@ function mostrarPanelRestricciones() {
   document.querySelector('footer').style.visibility = 'hidden';
   element = document.getElementById("content");
   check = document.getElementById("check");
+
   if (check.checked) {
     element.style.display = 'block';
   } else {
     element.style.display = 'none';
   }
-};
+}
+
+;
 
 function selectSignoParaFuncion() {
   var cod = document.getElementById("signo").value;
   return cod;
-};
+}
+
+;
 
 function llenarHidden() {
   var izq = document.getElementById("inputLadoIzq").value;
   var der = document.getElementById("inputLadoDer").value;
   var sig = document.getElementById("signo").value;
   var equa = document.getElementById("restriccionCompleta").value += izq + sig + der;
-
   var padre = document.getElementById("restric");
   var input = document.createElement("INPUT");
   input.type = 'text';
@@ -30,7 +36,6 @@ function llenarHidden() {
   input.id = 'restrict' + restrictionsinput;
   input.style = "margin-top: 5px";
   input.readOnly = true;
-
   padre.appendChild(input);
   document.getElementById("restrict" + restrictionsinput).value = equa;
   arrayrestrictionsinput.push(equa);
@@ -42,17 +47,20 @@ function llenarHidden() {
   document.getElementById("inputLadoDer").value = "";
   document.getElementById("restriccionCompleta").value = "";
   signo.selectedIndex = 0;
-};
+}
+
+;
 
 function eliminarRestriccion() {
   var elem = document.getElementById("restrict" + (restrictionsinput - 1));
   elem.parentNode.removeChild(elem);
-};
+}
+
+;
 
 function pr() {
   arrayrestrictionsinput = [];
 }
-
 
 function loading() {
   var contenedor = document.getElementById('cont_carga');
@@ -66,28 +74,40 @@ function loading() {
   }
 }
 
-function alerta(){
+function alerta() {
   let a = confirm('¿Desea descargar el archivo?');
-  if ( a == true){
+
+  if (a == true) {
     var element = document.getElementById('uno');
     var opt = {
-      margin:       3,
-      filename:     'result_GerMathJS.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 3, letterRendering: true },
-      jsPDF:        { unit: 'cm', format: 'a5', orientation: 'landscape', pagesplit: false }
-    }; 
-    // New Promise-based usage:
+      margin: 3,
+      filename: 'result_GerMathJS.pdf',
+      image: {
+        type: 'jpeg',
+        quality: 0.98
+      },
+      html2canvas: {
+        scale: 3,
+        letterRendering: true
+      },
+      jsPDF: {
+        unit: 'cm',
+        format: 'a5',
+        orientation: 'landscape',
+        pagesplit: false
+      }
+    }; // New Promise-based usage:
+
     html2pdf(element, opt);
-}
+  }
 }
 
-function mostrarExportar(){
+function mostrarExportar() {
   document.getElementById('allpage').style.display = 'none';
-  document.getElementById('exportar').style.display = 'block'
+  document.getElementById('exportar').style.display = 'block';
 }
 
-function ocultarExportar(){
+function ocultarExportar() {
   document.getElementById('allpage').style.display = 'block';
   document.getElementById('exportar').style.display = 'none';
 }

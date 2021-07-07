@@ -23,27 +23,25 @@ router.post('/add', async (req, res) => {
                             // ordenadas debido a las trasformaciones que sufre la variable a su paso
                             //Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
 
-    
-  const { f, x, y, description, ri, ari } = req.body;
+  const { f, x, y, arrayrestrictionsinput } = req.body;
 
-  var arrayRestrict = ari.split(',');
-  console.table(arrayRestrict);
+  var arrayRestrict = arrayrestrictionsinput.split(',');
 
   const layers = [ 2, 3, 1 ];
 
   const network = new Network(layers);
   datos = [];
+  network.cleanRestrictions();
   network.setRestrictions(arrayRestrict);
 
   try {
-    
     var c = 0;
-
   core.setFunction('f', network.l, f);
   var resultadox = core('f('+x+','+y+')').toString();
   network.setF(f);
   var deriv = [];
 
+    //Guardamos las derivadas respectivas de la funcion.
   for (let index = 0; index < network.l.length; index++) {
     deriv.push(core.diff(f, network.l[index]).toString());
   }
@@ -54,7 +52,6 @@ router.post('/add', async (req, res) => {
   }];
 
 while(Math.abs(network.pDelta) >= err && network.iterations <= 60){
-  //for (let i = 0; i < numberOfIterations; i++) {
     console.table('Iteracion ' + network.iterations);
 
     network.train(trainingData[0].input, trainingData[0].output);
@@ -62,28 +59,19 @@ while(Math.abs(network.pDelta) >= err && network.iterations <= 60){
 
     trainingData[0].input = network.mejoresValores;
     trainingData[0].output = network.mejorResultado;
-
-    console.log('este es el nuevo inicio bich', trainingData[0]);
-
     
     datos.push({iteraciones: c, X: network.mejoresValores[0], Y: network.mejoresValores[1], resultado: network.mejorResultado, error: Math.abs(network.pDelta) })
     c =  c+1;
   }
 
-  console.log('arrayrestrict', arrayRestrict[0]);
-  console.log('arrayrestrict', arrayRestrict.length);
-
-
   if(arrayRestrict.includes('')) {
       var v = 'none';
-      var wR = '100%'
+      var wR = '90%'
   }else{
     var v = 'inline-block';
-    var wR = '84%'
+    var wR = '78%'
   }
-//}
-  res.render('neural_network/nn', {resultado: network.mejorResultado, funcion: f, derivadas: deriv, datos: datos, visibleR: v, wR: wR, restrict: arrayRestrict });
-
+  res.render('neural_network/nn', {resultado: network.mejorResultado, funcion: f, derivadas: deriv, datos: datos, visibleR: v, wR: wR, restrict: arrayRestrict, X: network.mejoresValores[0], Y: network.mejoresValores[1]});
 } catch (error) {
   console.log('error', error);
   res.redirect('/');   

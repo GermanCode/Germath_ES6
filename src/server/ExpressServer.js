@@ -40,6 +40,7 @@ class ExpressServer {
         extname: '.hbs',
         helpers: require('../lib/handlebars')
     }));
+    
     this.server.set('view engine', '.hbs');
     }
   
@@ -67,6 +68,7 @@ class ExpressServer {
         saveUninitialized: false,
         store: new MySQLStore( database )
       }));
+
       this.server.use(passport.initialize());
       this.server.use(passport.session());
 
@@ -76,14 +78,12 @@ class ExpressServer {
     this.server.locals.message = req.flash('message');
     this.server.locals.user = req.user;
     next();
-  
   });
         //Routes Implementation
         this.server.use('/', this.routesIndex);
         this.server.use('/auth/', this.routesAuth);
         this.server.use('/nn/', this.routesNN);
         
-      
         //Start Listening
       this.server.listen(this.port, () => {
         console.log(`${this.serverName} Started at http://${this.hostname}:${this.port}/`);

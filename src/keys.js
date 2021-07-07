@@ -1,3 +1,5 @@
+//Coleccion de bases de datos tanto para desarrollo como para produccion
+
 module.exports = {
     //Database Maquina Local
     /*database: {

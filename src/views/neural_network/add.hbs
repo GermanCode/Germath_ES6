@@ -6,7 +6,7 @@
               <h5>La Red Neuronal esta optimizando la funcion...</h5>
             <div id="carga"></div></div>
         <div class="card-body">
-          <form id="fp" action="/nn/add" method="POST">
+          <form id="formOptimization" action="/nn/add" method="POST">
             <div class="form-group">
               <h3 class="text-center">Función</h1>
                 <input type="text" name="f" id= "f" placeholder="Funcion" class="form-control" autofocus>
@@ -53,11 +53,10 @@
                   <div class="form-group"></div>
                   <div class="mx-auto row p-1">
                     <button type="button" id="addRestric" name="addRestric" onclick="javascript:llenarHidden()"> +
-                      <button type="button" id="delRestric" name="delRestric"
-                        onclick="javascript:eliminarRestriccion()"> -
+                    <button type="button" id="delRestric" name="delRestric" onclick="javascript:eliminarRestriccion()"> -
                         <input id="restriccionCompleta" name="restriccionCompleta" type="hidden">
-                        <input id="ri" name="ri" type="hidden">
-                        <input id="ari" name="ari" type="hidden">
+                        <input id="restrictionsinput" name="restrictionsinput" type="hidden">
+                        <input id="arrayrestrictionsinput" name="arrayrestrictionsinput" type="hidden">
                   </div>
                 </div>
               </div>
@@ -78,7 +77,7 @@
               </div>
             </div>
             <div class="form-group"></div>
-            <button class="btn btn-success btn-block" onclick="loading()">RUN</button>
+            <button class="btn btn-success btn-block" onclick="loading()">Resolver</button>
           </form>
         </div>
       </div>

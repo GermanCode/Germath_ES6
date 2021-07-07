@@ -1,21 +1,26 @@
-<div class="container-fluid allpage" style="text-align:center;">
-  <div class="allpage">
-    <div class='resultado text-center' id="uno" style="padding: 5px; border: 2px solid black; width: {{ wR }};" onload="loader()">
+<div class="container-fluid allpage" id="allSolution" name="allSolution" style="text-align:center;">
+  <div class="allpage" id="allpage">
+    <div id="export" class="left" style="display: inline-block; padding-top: 60px; border: 2px solid black;">
+      <button class="btn btn-secondary btn-block" onclick="javascript:mostrarExportar();">Exportar</button>
+    </div>
+    <div class='resultado text-center' id="uno" style="padding: 7px; border: 2px solid black; width: {{ wR }};"
+      onload="javascript:pr()">
       <h3>
-        <b>Max f(x , y) = </b> \({{ funcion }}\)
+        <b>Max Z = f(x , y) = </b> \({{ funcion }}\)
       </h3>
-      <h2>{{ resultado }}</h2></div>
-
-      <div id="panel" class="right" style ="display: {{ visibleR }}; padding: 5px; border: 2px solid black;">
-        <h5>Restricciones:</h5>
-        <table class="table" type="hidden">
-          <tbody> {{#each restrict}} <tr>
-              <td>{{this}}</td>
-            </tr>{{/each}}
-          </tbody>
-        </table>
-      </div>
-    
+      <h2>Max Z = {{ resultado }}</h2>
+      <h5>x = {{ X }} </h5>
+      <h5> y = {{ Y }}</h5>
+    </div>
+    <div id="panel" class="right" style="display: {{ visibleR }}; padding: 5px; border: 2px solid black;">
+      <h5>Restricciones:</h5>
+      <table class="table" type="hidden">
+        <tbody> {{#each restrict}} <tr>
+            <td>{{this}}</td>
+          </tr>{{/each}}
+        </tbody>
+      </table>
+    </div>
     <div class='grafico' id="tres" onload="draw()" style="background-color: white; border: 2px solid #000000;">
       <div id="box" style="display: inline-block;">
         <div id="box-content" class="card box-content">
@@ -58,4 +63,49 @@
         </div>
       </div>
     </div>
-    <script src="/js/draw.js"></script>
+  </div>
+
+  <div id="exportar"
+    style="display: none; background-image: url(' /img/Logo_trans.png'); background-repeat: repeat; height: 100%;">
+    <div id="confirmexport" class="left2"
+      style="padding-top: 10px; padding-bottom: 10px; border: 2px solid black; border-radius: 10%; background-color: whitesmoke;">
+      <button class="btn btn-success btn-block" onclick="javascript:alerta();"><span
+          class="fa fa-fw mr-3 fa-print"></span>Exportar</button>
+      <button class="btn btn-warning btn-block" onclick="javascript:ocultarExportar();"><span
+          class="fa fa-fw mr-3 fa-ban"></span>Volver</button>
+    </div>
+
+    <div class='resultadoExport text-center' id="resultadoExport"
+      style="padding-top: 20px; padding-bottom: 20px; border: 2px solid black; background-color: whitesmoke;">
+      <h4>
+        <b>Max Z = f(x , y) = </b> \({{ funcion }}\)
+        <br>
+        <h5 style="color: #28a745;"> Sujeto a: 
+        <b>{{#each restrict}}
+        {{this}}
+        {{/each}}</b></h5>
+        
+      </h4>
+      <h3 style="color: #dc3545;">Max Z = {{ resultado }}</h3>
+      <h4>x = {{ X }}</h4>
+      <h4>y = {{ Y }}</h4>
+    </div>
+
+    <!--This is our template. 
+    <div id="panel" class="resultadoExport text-center"
+      style="display: {{ visibleR }}; padding: 5px; border: 2px solid black;">
+      <h5>Restricciones:</h5>
+      <table class="table" type="hidden">
+        <tbody>{{#each restrict}}<tr>
+            <td>{{this}}</td>
+          </tr>{{/each}}
+        </tbody>
+      </table>
+    </div>-->
+    <button class="btn btn-danger" style="margin-top: 50px; border: solid 2px black;"
+      onclick="location.href='http://localhost:3000/nn/add'"><span
+        class="fa fa-fw mr-3 fa-undo"></span>Cancelar</button>
+  </div>
+
+</div>
+<script src="/js/draw.js"></script>

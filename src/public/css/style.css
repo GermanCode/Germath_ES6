@@ -67,27 +67,10 @@
     top: 56px;
 }
 
-/* Sidebar sizes when expanded and expanded */
-.sidebar-expanded {
-    width: 220px;
-}
-.sidebar-collapsed {
-    width: 60px;
-}
-
 /* Menu item*/
 #sidebar-container .list-group a {
     height: 50px;
     color: white;    
-}
-
-/* Submenu item*/
-#sidebar-container .list-group .sidebar-submenu a {
-    height: 45px;
-    padding-left: 30px;
-}
-.sidebar-submenu {
-    font-size: 0.9rem;
 }
 
 /* Separators */
@@ -104,28 +87,11 @@
     height: 60px;
 }
 
-/* Closed submenu icon */
-#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
-  content: " \f0d7";
-  font-family: FontAwesome;
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
-}
-/* Opened submenu icon */
-#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
-  content: " \f0da";
-  font-family: FontAwesome;
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
-}
-
 .grafico {
 	border:1px solid black;
 	width:43.5%;
 	display:inline-block;
-	height:76.5%;
+	height:71.5%;
 	overflow:scroll;
 }
 
@@ -133,23 +99,47 @@
 	border:1px solid black;
 	width:55.5%;
 	display:inline-block;
-	height:76.5%;
+	height:71.5%;
 	overflow:scroll;
 }
 
 .right{
-	width:15%;
+	width:12%;
 	display:inline-block;
-	height:20%;
+	height:27%;
 	overflow:auto;
+    font-family: 'Libre Baskerville';
+}
+.left{
+	width:9%;
+	display:inline-block;
+	height:27%;
+	overflow:auto;
+}
+
+.left2{
+	width:13%;
+	display: inline-block;
+	height:110px;
+    top: 50px;
+    margin: 40px;
+
+}
+
+.resultadoExport {
+    padding-top: 20px;
+	border:1px solid black;
+	width:92%;
+	display: inline-block;
+	height:40%;
     font-family: 'Libre Baskerville';
 }
 
 .resultado {
 	border:1px solid black;
-	width:100%;
+	width:95%;
 	display:inline-block;
-	height:20%;
+	height:27%;
 	overflow:hidden;
     font-family: 'Libre Baskerville';
 }
@@ -163,7 +153,6 @@
 	width:100%;
 	background-color:whitesmoke;
     position: relative;
-
 }
 
 #cont_carga{
@@ -197,8 +186,4 @@
     from { transform: rotate(0deg);}
     to { transform: rotate(360deg);}
     
-}
-
-#imagenb{
-    background: url('/img/loading.gif') 50% 50% no-repeat rgb(249,249,249);
 }
