@@ -1,0 +1,39 @@
+<div class="container p-2">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">Establecer Rol</h5>
+          <form action="/admin/est_rol_user/{{usuario.Identificacion}}" method="POST">
+            <div class="form-group">
+              <h6>Identificacion</h6>
+              <input type="text" class="form-control" name="Identificacion" value="{{usuario.Identificacion}}" readonly>
+            </div>
+            <div class="form-group">
+              <h6>Nombres:</h6>
+              <input type="text" class="form-control" id="Nombres" name="Nombres" value="{{usuario.Nombres}}" readonly>
+              <h6>Apellidos:</h6>
+              <input type="text" class="form-control" value="{{usuario.Apellidos}}" id="Apellidos" name="Apellidos" readonly>
+            </div>
+            <div class="form-group">
+              <h6>Estado</h6>
+              <input type="text" class="form-control" value="{{usuario.Estado}}" name="Estado" readonly>
+        </div>
+        <div class="form-group text-center mx-auto">
+          <h6>Rol</h6>
+          <select name="selectRol" id="selectRol" onchange="llenarRol()" value="{{usuario.Descripcion}}">
+            <option>{{usuario.Descripcion}}</option>
+            <option value="1">Administrador</option>
+            <option value="2">Usuario</option>
+          </select>
+          <input type="hidden" name="hiddenRol" id="hiddenRol" value="{{usuario.Descripcion}}">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success btn-block">Actualizar Rol</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -8,6 +8,7 @@
 
     {{! Animaciones --}}
     <link rel="stylesheet" href="/css/animate.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
 
     {{!-- Google Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
@@ -17,12 +18,15 @@
     {{!-- Bootstrap 4 --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
 
     {{!-- FontAwsome --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     {{!-- Styles --}}
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
 
     <link rel="icon" href="/img/favicon2.ico" type="image/x-icon">
     <script src="/js/html2pdf.bundle.min.js"></script>
@@ -34,6 +38,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script src="/js/jquery.js"></script>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.10.0/math.min.js"></script>
 
@@ -46,10 +51,9 @@
 
 </head>
 
-<body style="background-image: url('/img/fondo2.jpg');">
+<body style="background-image: url('/img/fondo2.jpg'); overflow-y: auto;">
     {{> navigation }}
-    <div class="container-fluid col-md-13 align-self-center" style="height: auto;" background-image:
-        url('/img/fondo_white.jpg');>
+    <div class="container-fluid col-md-13 align-self-center" style="height: auto;">
         {{>message}}
         {{{ body }}}
     </div>
@@ -69,6 +73,10 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js" integrity="sha512-w3u9q/DeneCSwUDjhiMNibTRh/1i/gScBVp2imNVAMCt6cUHIw6xzhzcPFIaL3Q1EbI2l+nu17q2aLJJLo4ZYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.js"></script>
+
+
 </body>
 
 

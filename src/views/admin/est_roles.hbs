@@ -1,0 +1,22 @@
+<div class="container p-1 b-2">
+  <div class="row">
+    {{#each usuarios}}
+    <div class="col-md-4 p-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <a href="/admin/est_rol/{{Identificacion}}">
+            <h3 class="card-title text-uppercase">
+              {{Identificacion}}
+            </h3>
+          </a>
+          <p class="m-2">{{Nombres}} {{Apellidos}}</p>
+          <p>{{Descripcion}} - {{Estado}}</p>
+          <p>{{timeago created_at}}</p>
+          
+          <a href="/admin/edit_user/{{Identificacion}}" class="btn btn-primary">Actualizar Rol</a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

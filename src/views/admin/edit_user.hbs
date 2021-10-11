@@ -1,0 +1,36 @@
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <form action="/admin/edit_user/{{usuario.Identificacion}}" method="POST">
+            <div class="form-group">
+              <p>Identificacion</p>
+              <input type="text" class="form-control" name="Identificacion" value="{{usuario.Identificacion}}" readonly>
+            </div>
+            <div class="form-group">
+            <p>Nombres:</p>
+            <input type="text" class="form-control" id = "Nombres" name="Nombres" value="{{usuario.Nombres}}">
+        </div>
+        <div class="form-group">
+          <p>Apellido</p>
+          <input type="text" class="form-control" value="{{usuario.Apellidos}}" name="Apellidos" readonly>
+        </div>
+        <div class="form-group">
+          <h6>Estado</h6>
+          <select name="selectEstado" id="selectEstado" onchange="llenarEst()">
+            <option>{{usuario.Estado}}</option>  
+            <option value="1">Activo</option>
+            <option value="2">Inactivo</option>
+          </select>
+          <input type="hidden" name="hiddenEst" id="hiddenEst" value="{{usuario.Estado}}">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success btn-block">Actualizar</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

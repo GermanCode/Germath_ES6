@@ -38,6 +38,7 @@ class ExpressServer {
       this.routesIndex = require('../routes/index');
       this.routesAuth = require('../routes/authentication');
       this.routesNN = require('../routes/nn');
+      this.routesUsers = require('../routes/usuarios');
     });
 
     _defineProperty(this, "initViewEngine", () => {
@@ -50,6 +51,16 @@ class ExpressServer {
         helpers: require('../lib/handlebars')
       }));
       this.server.set('view engine', '.hbs');
+
+      var hbs = require('handlebars');
+
+      hbs.registerHelper('ifEquals', function (a, b, options) {
+        if (a === b) {
+          return options.fn(this);
+        }
+
+        return options.inverse(this);
+      });
     });
 
     _defineProperty(this, "initServer", () => {
@@ -90,7 +101,8 @@ class ExpressServer {
 
       this.server.use('/', this.routesIndex);
       this.server.use('/auth/', this.routesAuth);
-      this.server.use('/nn/', this.routesNN); //Start Listening
+      this.server.use('/nn/', this.routesNN);
+      this.server.use('/admin/', this.routesUsers); //Start Listening
 
       this.server.listen(this.port, () => {
         console.log(`${this.serverName} Started at http://${this.hostname}:${this.port}/`);

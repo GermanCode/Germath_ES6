@@ -31,7 +31,8 @@ router.post('/add', async (req, res) => {
     f,
     x,
     y,
-    arrayrestrictionsinput
+    arrayrestrictionsinput,
+    hiddenId
   } = req.body;
   var arrayRestrict = arrayrestrictionsinput.split(',');
   const layers = [2, 3, 1];
@@ -80,6 +81,19 @@ router.post('/add', async (req, res) => {
       var wR = '78%';
     }
 
+    try {
+      var na = 'No Aplica';
+
+      if (arrayRestrict.includes('')) {
+        arrayRestrict = na;
+      }
+
+      await pool.query('INSERT INTO nn (funcion, restricciones, user_ID, resultado, created_at, salida) VALUES ("' + f + '"' + ', ' + '"' + arrayRestrict + '"' + ', ' + hiddenId + ', ' + network.mejorResultado + ',  now(), "Correcto");');
+      console.log('exito!');
+    } catch (error) {
+      console.log(error);
+    }
+
     res.render('neural_network/nn', {
       resultado: network.mejorResultado,
       funcion: f,
@@ -92,6 +106,7 @@ router.post('/add', async (req, res) => {
       Y: network.mejoresValores[1]
     });
   } catch (error) {
+    await pool.query('INSERT INTO nn (funcion, restricciones, user_ID, resultado, created_at, salida) VALUES ("' + f + '"' + ', ' + '"' + arrayRestrict + '"' + ', ' + hiddenId + ', ' + network.mejorResultado + ',  now(), "Incorrecto");');
     console.log('error', error);
     res.redirect('/');
   }

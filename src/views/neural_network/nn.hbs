@@ -34,7 +34,7 @@
       <input type="hidden" id="dX" value={{ dX }}>
       <input type="hidden" id="dY" value={{ dY }}>
 
-      <div id="div1" class=" p-1 col-md-4">
+      <div id="div1" class=" p-1 col-md-4;">
         <div id="box" style="display: inline-block;">
           <div id="box-content" class="card box-content" style="width: 100%; border: 1px solid #000000;">
             <table class="table" style="font-family: 'Libre Baskerville'; font-size: 13px;">
@@ -91,17 +91,6 @@
       <h4>y = {{ Y }}</h4>
     </div>
 
-    <!--This is our template. 
-    <div id="panel" class="resultadoExport text-center"
-      style="display: {{ visibleR }}; padding: 5px; border: 2px solid black;">
-      <h5>Restricciones:</h5>
-      <table class="table" type="hidden">
-        <tbody>{{#each restrict}}<tr>
-            <td>{{this}}</td>
-          </tr>{{/each}}
-        </tbody>
-      </table>
-    </div>-->
     <button class="btn btn-danger" style="margin-top: 50px; border: solid 2px black;"
       onclick="location.href='http://localhost:3000/nn/add'"><span
         class="fa fa-fw mr-3 fa-undo"></span>Cancelar</button>

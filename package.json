@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "confirm-dialog": "^0.1.2",
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
     "es6-promisify": "^6.1.1",

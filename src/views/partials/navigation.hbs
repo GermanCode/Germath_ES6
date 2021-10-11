@@ -9,9 +9,36 @@
       <!-- Opciones Principales -->
       <ul class="navbar-nav ml-auto">
         {{#if user}}
+        {{#ifEquals user.fk_Rol 1}}
+        <!--
         <li class="nav-item">
-          <a class="nav-link" href="/">Inicio</a>
+          <a class="nav-link" href="/admin/users">Administración U</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/admins">Administración A</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/est_rol">Administración T</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/act_user">Administración D</a>
+        </li>
+        -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/admin/users" id="navbarDropdown" role="button" data-toggle="dropdown" arias
+            aria-haspopup="true" aria-expanded="false">
+            Administración
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a href="/admin/users" class="dropdown-item">Ver Usuarios</a>
+            <a href="/admin/admins" class="dropdown-item">Ver Administradores</a>
+            <a href="/admin/act_user" class="dropdown-item">Activar Cuentas</a>
+            <a href="/admin/est_rol" class="dropdown-item">Actualizar Roles</a>
+            <div class="dropdown-divider"></div>
+            <a href="/admin/data" class="dropdown-item">Revisar Datos de RNA</a>
+          </div>
+        </li>
+        {{/ifEquals }}
         <li class="nav-item">
           <a class="nav-link" href="/nn/add">Optimizador Lineal</a>
         </li>

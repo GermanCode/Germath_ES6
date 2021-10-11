@@ -1,0 +1,39 @@
+<div class="container p-1 b-2">
+  <div><h6 class="my-auto mx-auto text-white text-center bg-secondary" style="height: 30px; border-radius: 5%;">{{titulo}}</h6></div>
+  <div class="row">
+    {{#each usuarios}}
+    <div class="col-md-4 p-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <a href="/admin/edit_user/{{Identificacion}}">
+            <h3 class="card-title text-uppercase">
+              {{Identificacion}}
+            </h3>
+          </a>
+          <p class="m-2">{{Nombres}} {{Apellidos}}</p>
+          <p>{{Estado}}</p>
+          <p>{{timeago created_at}}</p>
+          
+          <a href="/admin/edit_user/{{Identificacion}}" class="btn btn-primary">Actualizar</a>
+          {{#ifEquals Estado 'Inactivo'}}
+          <a href="/admin/act/{{Identificacion}}" class="btn btn-success"
+            onclick="return confirm('¿Desea activar el Usuario?')">Activar</a>
+          {{/ifEquals }}
+          {{#ifEquals Estado 'Activo'}}
+          <a href="/admin/desac/{{Identificacion}}" class="btn btn-danger"
+            onclick="return confirm('¿Desea desactivar el Usuario?')">Desactivar</a>
+          {{/ifEquals }}
+        </div>
+      </div>
+    </div>
+    {{else}}
+            <div class="p-5 col-md-6 mx-auto">
+                <div class="card card-body text-center">
+                    <h5>No hay usuarios para activar en este momento...</h5>
+                    <p></p>
+                    <a href="/admin/users">Ver usuarios?</a>
+                </div>
+            </div>
+    {{/each}}
+  </div>
+</div>

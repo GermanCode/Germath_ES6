@@ -23,7 +23,7 @@ router.post('/add', async (req, res) => {
                             // ordenadas debido a las trasformaciones que sufre la variable a su paso
                             //Recibimos la funcion ingresada y la almacenamos en una vairable llamada "funcion"
 
-  const { f, x, y, arrayrestrictionsinput } = req.body;
+  const { f, x, y, arrayrestrictionsinput, hiddenId } = req.body;
 
   var arrayRestrict = arrayrestrictionsinput.split(',');
 
@@ -71,8 +71,19 @@ while(Math.abs(network.pDelta) >= err && network.iterations <= 60){
     var v = 'inline-block';
     var wR = '78%'
   }
+  try {
+    var na = 'No Aplica'
+    if(arrayRestrict.includes('')){
+      arrayRestrict = na;
+    }
+    await pool.query('INSERT INTO nn (funcion, restricciones, user_ID, resultado, created_at, salida) VALUES ("'+f+'"'+', ' + '"'+arrayRestrict+'"' +', '+ hiddenId+', '+ network.mejorResultado +',  now(), "Correcto");');
+    console.log('exito!');
+  } catch (error) {
+    console.log(error)
+  }
   res.render('neural_network/nn', {resultado: network.mejorResultado, funcion: f, derivadas: deriv, datos: datos, visibleR: v, wR: wR, restrict: arrayRestrict, X: network.mejoresValores[0], Y: network.mejoresValores[1]});
 } catch (error) {
+  await pool.query('INSERT INTO nn (funcion, restricciones, user_ID, resultado, created_at, salida) VALUES ("'+f+'"'+', ' + '"'+arrayRestrict+'"' +', '+ hiddenId+', '+ network.mejorResultado +',  now(), "Incorrecto");');
   console.log('error', error);
   res.redirect('/');   
 }
@@ -108,6 +119,6 @@ router.post('/edit/:id', async (req, res) => {
   await pool.query('UPDATE users SET ? WHERE id = ?', [newUser, id]);
   req.flash('success', 'Usuario Actualizado Correctamente.')
   res.redirect('/nn');
-})
+});
 
 module.exports = router;

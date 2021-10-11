@@ -111,3 +111,27 @@ function ocultarExportar() {
   document.getElementById('allpage').style.display = 'block';
   document.getElementById('exportar').style.display = 'none';
 }
+
+function llenarEst() {
+  var est = document.getElementById("selectEstado");
+  var idest = est.value;
+  alert('¿Esta seguro de realizar esta acción?');
+  document.getElementById("hiddenEst").value = idest;
+}
+
+;
+
+function llenarRol() {
+  var rol = document.getElementById("selectRol");
+  var idrol = rol.value;
+  alert('¿Esta seguro de realizar esta acción?');
+  document.getElementById("hiddenRol").value = idrol;
+}
+
+;
+
+function alerta2() {
+  alert("Click en Aceptar para desactivar el Usuario.");
+}
+
+;
