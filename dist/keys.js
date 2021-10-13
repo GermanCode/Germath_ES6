@@ -13,9 +13,9 @@ module.exports = {
   */
   //Database Servidor Heroku
   database: {
-    host: 'un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'b0ryxd9955wo68hf',
-    password: 'x8u24i45jgxbfvbg',
-    database: 'aowleewf7faaf7kk'
+    host: 'uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'blv0mbnjbe33f69t',
+    password: 'fk91hz8sdi7ckjaz',
+    database: 'hb4orndnmdgsdrn5'
   }
 };

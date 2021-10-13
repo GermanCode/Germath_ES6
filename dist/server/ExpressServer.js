@@ -33,7 +33,7 @@ const {
 } = _express.default.Router();
 
 class ExpressServer {
-  constructor(hostname = process.env.LOCAL_HOST, port = process.env.PORT || 3000) {
+  constructor(hostname = process.env.HOST, port = process.env.PORT || 3000) {
     _defineProperty(this, "initRoutes", () => {
       this.routesIndex = require('../routes/index');
       this.routesAuth = require('../routes/authentication');
