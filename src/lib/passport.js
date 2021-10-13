@@ -39,7 +39,7 @@ passport.use('local.signup', new LocalStrategy({
     };
     newUser.apellidos = await helpers.encryptPassword(apellidos);
     const result = await pool.query('INSERT INTO persona SET ?', [newUser]);
-    const actualizarApellido = await pool.query('UPDATE persona set Apellidos = ?', [apellidos]);
+    const actualizarApellido = await pool.query('UPDATE persona set Apellidos = ? where Identificacion = ?', [apellidos, Identificacion]);
     return done(null, newUser);
 }));
 
