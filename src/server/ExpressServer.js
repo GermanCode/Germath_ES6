@@ -14,7 +14,7 @@ import { database } from '../keys.js';
 
 class ExpressServer {
 
-  constructor(hostname = process.env.HOST, port = process.env.PORT || 3000) {
+  constructor(hostname = process.env.LOCAL || 'localhost', port = process.env.PORT || 3000) {
     this.serverName = 'Express Server';
     this.hostname = hostname;
     this.port = port;

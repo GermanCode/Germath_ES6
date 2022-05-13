@@ -5,12 +5,11 @@ module.exports = {
   //Database Maquina Local
 
   /*database: {
-      host: 'localhost',
+      host: '127.0.0.1',
       user: 'root',
       password: 'root',
       database: 'germath_local'
-  }
-  */
+  }*/
   //Database Servidor Heroku
   database: {
     host: 'uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
