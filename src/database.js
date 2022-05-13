@@ -1,4 +1,4 @@
-//importacion de modulos para conexión La Base de Datos
+//importacion de modulos para conexión La Base de Datos.
 //Inclusion de EcmaScript6 para soporte de Clases y Constantes en Javascipt Node.JS
 
 import mysql from 'mysql';
